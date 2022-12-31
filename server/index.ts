@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import express from "express";
 import http from "http";
 import cors from "cors";
+import { env } from "./env/schema.js";
 import { typeDefs, resolvers } from "./schema/index.js";
 import { PrismaClient } from "@prisma/client";
 import type { MyContext } from "./types/index.js";
@@ -26,7 +27,7 @@ const prisma = new PrismaClient({});
 app.use(
   "/graphql",
   cors<cors.CorsRequest>({
-    origin: process.env.CLIENT_ORIGIN,
+    origin: env.CLIENT_ORIGIN,
     credentials: true,
   }),
   express.json(),

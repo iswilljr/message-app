@@ -53,6 +53,10 @@ export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen
                 selectUser={(user) => setSelectedUsers((prev) => [...prev, user])}
               />
               <CreateConversation
+                closeModal={() => {
+                  onClose();
+                  setSelectedUsers([]);
+                }}
                 selectedUsers={selectedUsers}
                 removeUser={(userId) => setSelectedUsers((prev) => prev.filter((user) => user.id !== userId))}
               />

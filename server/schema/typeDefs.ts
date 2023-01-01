@@ -12,10 +12,15 @@ export const typeDefs = gql`
 
   type Mutation {
     createUsername(username: String!): CreateUsername
+    createConversation(userIds: [String!]!): CreateConversation
   }
 
   type CreateUsername {
     success: Boolean!
     error: String
+  }
+
+  type CreateConversation {
+    conversationId: String!
   }
 `;

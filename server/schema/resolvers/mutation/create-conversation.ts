@@ -9,10 +9,11 @@ export const createConversation: MutationResolvers["createConversation"] = async
   const userId = session.user?.id;
 
   const participants = userIds.filter((id) => id !== userId);
+  const size = new Set(participants).size;
 
   if (userId) participants.unshift(userId);
 
-  if (new Set(participants).size !== participants.length) throw new GraphQLError("Invalid userids arguments");
+  if (size < 2 || size !== participants.length) throw new GraphQLError("Invalid userids arguments");
 
   try {
     const conversation = await prisma.conversation.create({

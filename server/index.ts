@@ -9,11 +9,10 @@ import cors from "cors";
 import { env } from "./env/schema.js";
 import { typeDefs, resolvers } from "./schema/index.js";
 import { PrismaClient } from "@prisma/client";
-import type { MyContext } from "./types/index.js";
 
 const app = express();
 const httpServer = http.createServer(app);
-const server = new ApolloServer<MyContext>({
+const server = new ApolloServer<Context>({
   typeDefs,
   resolvers,
   csrfPrevention: true,
@@ -31,7 +30,7 @@ app.use(
     credentials: true,
   }),
   express.json(),
-  expressMiddleware<MyContext>(server, {
+  expressMiddleware<Context>(server, {
     context: async ({ req }) => {
       const session = await getSession({ req });
       return { session, prisma };

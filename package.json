@@ -14,6 +14,7 @@
     "format": "prettier -wu .",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
+    "typecheck": "tsc --noEmit && yarn --cwd server tsc --noEmit && yarn --cwd client tsc --noEmit",
     "postinstall": "yarn prisma:generate && yarn codegen"
   },
   "devDependencies": {

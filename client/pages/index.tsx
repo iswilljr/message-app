@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <Box>
-      {status === "authenticated" && (data.user.username != undefined ? <Chat /> : <UsernameForm />)}
+      {status === "authenticated" && (data.user?.username != undefined ? <Chat /> : <UsernameForm />)}
       {status === "unauthenticated" && <Auth />}
     </Box>
   );

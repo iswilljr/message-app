@@ -7,6 +7,7 @@ export function Auth() {
       <Stack>
         <Text align="center">Me</Text>
         <Button onClick={() => signIn("github")}>Login with Github</Button>
+        <Button onClick={() => signIn("google")}>Login with Google</Button>
       </Stack>
     </Center>
   );

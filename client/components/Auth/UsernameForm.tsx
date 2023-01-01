@@ -7,7 +7,7 @@ import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@client
 export function UsernameForm() {
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState<string>();
-  const [createUsername] = useMutation<CreateUsernameMutation, CreateUsernameMutationVariables>(
+  const [createUsername, { loading }] = useMutation<CreateUsernameMutation, CreateUsernameMutationVariables>(
     CREATE_USERNAME_MUTATION
   );
 
@@ -47,7 +47,9 @@ export function UsernameForm() {
             />
             {usernameError && <FormHelperText color="red.500">{usernameError}</FormHelperText>}
           </FormControl>
-          <Button type="submit">Create</Button>
+          <Button type="submit" isLoading={loading}>
+            Create
+          </Button>
         </Stack>
       </form>
     </Center>

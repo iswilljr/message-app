@@ -14,7 +14,7 @@ export const searchUsers: QueryResolvers["searchUsers"] = async (_, { id }, { pr
       },
     });
 
-    return users.map((user) => ({ id: user.id, username: user.username as string }));
+    return users.map((user) => ({ id: user.id, username: user.username }));
   } catch (error: any) {
     throw new GraphQLError(error.message);
   }

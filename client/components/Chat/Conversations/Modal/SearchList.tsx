@@ -1,10 +1,10 @@
 import { Avatar, Button, Flex, List, ListItem, Stack, Text } from "@chakra-ui/react";
-import { User } from "@client/types/graphql";
+import { SearchUser } from "@client/types/graphql";
 
 interface SearchListProps {
-  users?: User[] | null;
-  selectedUsers: User[];
-  selectUser: (user: User) => void;
+  users?: SearchUser[] | null;
+  selectedUsers: SearchUser[];
+  selectUser: (user: SearchUser) => void;
 }
 
 export function SearchList({ users, selectedUsers, selectUser }: SearchListProps) {

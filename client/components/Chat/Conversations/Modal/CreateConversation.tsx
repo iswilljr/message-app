@@ -1,13 +1,17 @@
 import { Button, Flex, List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { IconCircleMinus } from "@tabler/icons";
-import type { CreateConversationMutation, CreateConversationMutationVariables, User } from "@client/types/graphql";
 import { useMutation } from "@apollo/client";
 import { CREATE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
 import { useRouter } from "next/router";
+import type {
+  CreateConversationMutation,
+  CreateConversationMutationVariables,
+  SearchUser,
+} from "@client/types/graphql";
 
 interface SelectedProps {
   closeModal: () => void;
-  selectedUsers: User[];
+  selectedUsers: SearchUser[];
   removeUser: (userId: string) => void;
 }
 

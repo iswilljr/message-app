@@ -14,11 +14,11 @@ import { SEARCH_USERS_QUERY } from "@client/graphql/queries";
 import { useState } from "react";
 import { SearchList } from "./SearchList";
 import { CreateConversation } from "./CreateConversation";
-import type { SearchUsersQuery, SearchUsersQueryVariables, User } from "@client/types/graphql";
+import type { SearchUsersQuery, SearchUsersQueryVariables, SearchUser } from "@client/types/graphql";
 
 export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen: () => void; onClose: () => void }) {
   const [username, setUsername] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<SearchUser[]>([]);
 
   const [searchUsers, { loading, data }] = useLazyQuery<SearchUsersQuery, SearchUsersQueryVariables>(
     SEARCH_USERS_QUERY

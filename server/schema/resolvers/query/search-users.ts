@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
 
 export const searchUsers: QueryResolvers["searchUsers"] = async (_, { id }, { prisma, session }) => {
@@ -12,10 +13,16 @@ export const searchUsers: QueryResolvers["searchUsers"] = async (_, { id }, { pr
           mode: "insensitive",
         },
       },
+      select: populateUser,
     });
 
-    return users.map((user) => ({ id: user.id, username: user.username }));
+    return users;
   } catch (error: any) {
     throw new GraphQLError(error.message);
   }
 };
+
+const populateUser = Prisma.validator<Prisma.UserSelect>()({
+  id: true,
+  username: true,
+});

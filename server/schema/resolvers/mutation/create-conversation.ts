@@ -24,10 +24,6 @@ export const createConversation: MutationResolvers["createConversation"] = async
           },
         },
       },
-      include: {
-        participants: { include: { user: { select: { id: true, username: true } } } },
-        latestMessage: { include: { sender: { select: { id: true, username: true } } } },
-      },
     });
 
     return { conversationId: conversation.id };

@@ -6,6 +6,7 @@ import { Box } from "@chakra-ui/react";
 import { Auth } from "@client/components/Auth/Auth";
 import { Chat } from "@client/components/Chat/Chat";
 import { UsernameForm } from "@client/components/Auth/UsernameForm";
+import { ChatProvider } from "@client/components/Chat/Context";
 
 interface HomeProps {
   session?: Session | null;
@@ -16,7 +17,14 @@ export default function Home() {
 
   return (
     <Box>
-      {status === "authenticated" && (data.user?.username != undefined ? <Chat /> : <UsernameForm />)}
+      {status === "authenticated" &&
+        (data.user?.username != undefined ? (
+          <ChatProvider session={data}>
+            <Chat />
+          </ChatProvider>
+        ) : (
+          <UsernameForm />
+        ))}
       {status === "unauthenticated" && <Auth />}
     </Box>
   );

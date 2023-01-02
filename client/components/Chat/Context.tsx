@@ -8,7 +8,7 @@ interface ChatContext {
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const chatContext = createContext<ChatContext>({} as ChatContext);
 
-export function useConversationContext() {
+export function useChatContext() {
   const context = useContext(chatContext);
   return context;
 }

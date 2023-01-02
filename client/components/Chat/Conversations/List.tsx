@@ -3,7 +3,9 @@ import { Box, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
 import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
 import { ON_CONVERSATION_CREATED } from "@client/graphql/subscriptions";
 import { ConversationFragment, ConversationsQueryVariables } from "@client/types/graphql";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useChatContext } from "../Context";
 import { ConversationItem } from "./Item";
 import { ConversationModal } from "./Modal/Modal";
 
@@ -17,6 +19,9 @@ interface ConversationSubscription {
 
 export default function ConversationList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+  const { session } = useChatContext();
+  const { conversationId } = router.query;
 
   const { data, subscribeToMore } = useQuery<ConversationQuery, ConversationsQueryVariables>(CONVERSATIONS_QUERY);
 
@@ -47,7 +52,13 @@ export default function ConversationList() {
       <List>
         {data?.conversations?.map((conversation) => (
           <ListItem key={conversation.id}>
-            <ConversationItem {...conversation} />
+            <ConversationItem
+              conversation={conversation}
+              isSelected={conversation.id === conversationId}
+              selectedId={conversationId as string}
+              userId={session.user?.id ?? ""}
+              onClick={() => router.push({ query: { conversationId: conversation.id } })}
+            />
           </ListItem>
         ))}
       </List>

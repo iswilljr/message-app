@@ -1,8 +1,11 @@
 import { Box } from "@chakra-ui/react";
+import { ConversationsQuery } from "@client/types";
 import { useRouter } from "next/router";
 import ConversationList from "./List";
 
-export function Conversations() {
+interface ConversationsProps extends ConversationsQuery {}
+
+export function Conversations({ conversations }: ConversationsProps) {
   const router = useRouter();
   const { conversationId } = router.query;
 
@@ -15,7 +18,7 @@ export function Conversations() {
       py={6}
       px={3}
     >
-      <ConversationList />
+      <ConversationList conversations={conversations} />
     </Box>
   );
 }

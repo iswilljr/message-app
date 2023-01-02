@@ -1,3 +1,25 @@
-export function Feed() {
-  return <div>Feed</div>;
+import { Flex, Text } from "@chakra-ui/react";
+import { ConversationsQuery } from "@client/types";
+import { useRouter } from "next/router";
+import MessagesHeader from "./Messages/Header";
+
+interface FeedProps extends ConversationsQuery {}
+
+export function Feed({ conversations }: FeedProps) {
+  const router = useRouter();
+  const { conversationId } = router.query;
+
+  const conversation = conversations?.find((conversation) => conversation.id === conversationId);
+
+  return (
+    <Flex display={{ base: conversationId ? "flex" : "none", md: "flex" }} width="100%" direction="column">
+      {conversationId ? (
+        <Flex direction="column" justify="space-between" overflow="hidden" flexGrow={1}>
+          <MessagesHeader conversation={conversation} />
+        </Flex>
+      ) : (
+        <Text>No Conversation Selected</Text>
+      )}
+    </Flex>
+  );
 }

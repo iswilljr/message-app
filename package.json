@@ -7,6 +7,17 @@
     "server"
   ],
   "scripts": {
+    "client": "yarn --cwd=client",
+    "server": "yarn --cwd=server",
+    "build": "concurrently -c blue,yellow yarn:build:*",
+    "build:client": "yarn client build",
+    "build:server": "yarn server build",
+    "dev": "concurrently -k -c blue,yellow yarn:dev:*",
+    "dev:client": "yarn client dev",
+    "dev:server": "yarn server dev",
+    "start": "concurrently -k -c blue,yellow yarn:start:*",
+    "start:client": "yarn client start",
+    "start:server": "yarn server start",
     "codegen": "graphql-codegen --config utils/codegen.config.ts",
     "postcodegen": "rimraf client/types/{fragment-masking.ts,index.ts,gql.ts} && mv client/types/graphql.ts client/types/graphql.d.ts",
     "prisma:generate": "prisma generate --schema utils/prisma/schema.prisma",
@@ -14,7 +25,7 @@
     "format": "prettier -wu .",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
-    "typecheck": "tsc --noEmit && yarn --cwd server tsc --noEmit && yarn --cwd client tsc --noEmit",
+    "typecheck": "tsc --noEmit && yarn server tsc --noEmit && yarn client tsc --noEmit",
     "postinstall": "yarn prisma:generate && yarn codegen"
   },
   "devDependencies": {
@@ -27,6 +38,7 @@
     "@types/node": "18.11.18",
     "@typescript-eslint/eslint-plugin": "5.47.1",
     "@typescript-eslint/parser": "5.47.1",
+    "concurrently": "7.6.0",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
     "eslint-config-prettier": "8.5.0",

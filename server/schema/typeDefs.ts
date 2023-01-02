@@ -46,6 +46,10 @@ export const typeDefs = gql`
     createConversation(userIds: [String!]!): CreateConversation
   }
 
+  type Subscription {
+    onConversationCreated: Conversation
+  }
+
   type CreateUsername {
     success: Boolean!
     error: String

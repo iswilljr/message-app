@@ -7,10 +7,7 @@ export const conversations: QueryResolvers["conversations"] = async (_, _args, {
   try {
     const conversations = await prisma.conversation.findMany({
       where: { participants: { some: { userId: { equals: session.user?.id } } } },
-      include: {
-        participants: populateParticipants,
-        latestMessage: populateLastMessages,
-      },
+      include: populateConversation,
     });
 
     return conversations;
@@ -29,4 +26,9 @@ const populateParticipants = Prisma.validator<Prisma.ConversationParticipantArgs
 
 const populateLastMessages = Prisma.validator<Prisma.MessageArgs>()({
   select: { id: true, sender: populateUser, node: true, createdAt: true },
+});
+
+export const populateConversation = Prisma.validator<Prisma.ConversationInclude>()({
+  participants: populateParticipants,
+  latestMessage: populateLastMessages,
 });

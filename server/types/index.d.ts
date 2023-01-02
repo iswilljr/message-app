@@ -2,6 +2,7 @@ import {
   Resolvers as GraphQLResolvers,
   QueryResolvers as GraphQLQueryResolvers,
   MutationResolvers as GraphQLMutationResolvers,
+  SubscriptionResolvers as GraphQLSubscriptionResolvers,
 } from "./graphql.js";
 import type { PrismaClient } from "@prisma/client";
 import type { Session } from "next-auth";
@@ -26,6 +27,8 @@ declare global {
   interface QueryResolvers extends GraphQLQueryResolvers<Context> {}
 
   interface MutationResolvers extends GraphQLMutationResolvers<Context> {}
+
+  interface SubscriptionResolvers extends GraphQLSubscriptionResolvers<Context> {}
 }
 
 export {};

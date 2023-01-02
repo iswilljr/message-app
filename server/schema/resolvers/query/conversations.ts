@@ -8,6 +8,7 @@ export const conversations: QueryResolvers["conversations"] = async (_, _args, {
     const conversations = await prisma.conversation.findMany({
       where: { participants: { some: { userId: { equals: session.user?.id } } } },
       include: populateConversation,
+      orderBy: { updatedAt: "desc" },
     });
 
     return conversations;

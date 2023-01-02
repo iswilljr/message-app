@@ -15,7 +15,7 @@ export const typeDefs = gql`
     image: String
   }
 
-  type Conversations {
+  type Conversation {
     id: String!
     participants: [Participants!]!
     latestMessage: Message
@@ -38,7 +38,7 @@ export const typeDefs = gql`
 
   type Query {
     searchUsers(id: String!): [SearchUser!]
-    conversations: [Conversations!]
+    conversations: [Conversation!]
   }
 
   type Mutation {

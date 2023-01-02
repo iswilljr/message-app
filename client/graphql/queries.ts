@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CONVERSATION_FRAGMENT = gql`
-  fragment CONVERSATION on Conversations {
+  fragment CONVERSATION on Conversation {
     id
     participants {
       hasSeenLatestMessage

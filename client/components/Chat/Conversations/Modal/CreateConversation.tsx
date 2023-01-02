@@ -38,7 +38,9 @@ export function CreateConversation({ closeModal, selectedUsers, removeUser }: Se
       await router.push({ query: { conversationId } });
 
       closeModal();
-    } catch (error) {}
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (

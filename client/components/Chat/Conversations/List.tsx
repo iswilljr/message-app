@@ -1,8 +1,17 @@
-import { Box, Text, useDisclosure } from "@chakra-ui/react";
+import { useQuery } from "@apollo/client";
+import { Box, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
+import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
+import { ConversationFragment, ConversationsQueryVariables } from "@client/types/graphql";
+import { ConversationItem } from "./Item";
 import { ConversationModal } from "./Modal/Modal";
 
 export default function ConversationList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data } = useQuery<{ conversations?: ConversationFragment[] }, ConversationsQueryVariables>(
+    CONVERSATIONS_QUERY
+  );
+
+  console.log(data);
 
   return (
     <Box width="100%">
@@ -12,6 +21,13 @@ export default function ConversationList() {
         </Text>
       </Box>
       <ConversationModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <List>
+        {data?.conversations?.map((conversation) => (
+          <ListItem key={conversation.id}>
+            <ConversationItem {...conversation} />
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 }

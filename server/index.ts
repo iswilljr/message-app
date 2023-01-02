@@ -2,26 +2,58 @@ import "dotenv/config";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { PrismaClient } from "@prisma/client";
 import { getSession } from "next-auth/react";
+import { PubSub } from "graphql-subscriptions";
+import { useServer } from "graphql-ws/lib/use/ws";
+import { WebSocketServer } from "ws";
+import { env } from "./env/schema.js";
+import { schema } from "./schema/index.js";
 import express from "express";
 import http from "http";
 import cors from "cors";
-import { env } from "./env/schema.js";
-import { typeDefs, resolvers } from "./schema/index.js";
-import { PrismaClient } from "@prisma/client";
 
 const app = express();
 const httpServer = http.createServer(app);
-const server = new ApolloServer<Context>({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true,
-  cache: "bounded",
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-});
-await server.start();
 
 const prisma = new PrismaClient({});
+const pubsub = new PubSub();
+
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: "/graphql",
+});
+
+const serverCleanup = useServer(
+  {
+    schema,
+    context: (ctx: SubscriptionContext): Context => ({
+      session: ctx.connectionParams?.session ?? null,
+      prisma,
+      pubsub,
+    }),
+  },
+  wsServer
+);
+
+const server = new ApolloServer<Context>({
+  schema,
+  csrfPrevention: true,
+  cache: "bounded",
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+  ],
+});
+await server.start();
 
 app.use(
   "/graphql",
@@ -31,9 +63,9 @@ app.use(
   }),
   express.json(),
   expressMiddleware<Context>(server, {
-    context: async ({ req }) => {
+    context: async ({ req }): Promise<Context> => {
       const session = await getSession({ req });
-      return { session, prisma };
+      return { session, prisma, pubsub };
     },
   })
 );

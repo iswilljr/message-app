@@ -24,3 +24,16 @@ export const CONVERSATION_FRAGMENT = gql`
     updatedAt
   }
 `;
+
+export const MESSAGE_FRAGMENT = gql`
+  fragment MESSAGE on Message {
+    id
+    conversationId
+    node
+    sender {
+      id
+      username
+    }
+    createdAt
+  }
+`;

@@ -16,3 +16,15 @@ export const CREATE_CONVERSATION_MUTATION = gql`
     }
   }
 `;
+
+export const SEND_MESSAGE_MUTATION = gql`
+  mutation SendMessage($conversationId: String!, $node: String!) {
+    sendMessage(conversationId: $conversationId, node: $node)
+  }
+`;
+
+export const MARK_CONVERSATION_AS_READ_MUTATION = gql`
+  mutation MarkConversationAsRead($conversationId: String!) {
+    markConversationAsRead(conversationId: $conversationId)
+  }
+`;

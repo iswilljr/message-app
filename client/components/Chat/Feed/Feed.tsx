@@ -1,6 +1,8 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { ConversationsQuery } from "@client/types";
 import { useRouter } from "next/router";
+import { MessageInput } from "./Messages/Input";
+import { Messages } from "./Messages/Messages";
 import MessagesHeader from "./Messages/Header";
 
 interface FeedProps extends ConversationsQuery {}
@@ -16,6 +18,8 @@ export function Feed({ conversations }: FeedProps) {
       {conversationId ? (
         <Flex direction="column" justify="space-between" overflow="hidden" flexGrow={1}>
           <MessagesHeader conversation={conversation} />
+          {conversation && <Messages conversationId={conversation.id} />}
+          <MessageInput conversationId={conversation?.id} />
         </Flex>
       ) : (
         <Text>No Conversation Selected</Text>

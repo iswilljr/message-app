@@ -47,11 +47,18 @@ export const typeDefs = gql`
     createUsername(username: String!): CreateUsername
     createConversation(userIds: [String!]!): CreateConversation
     sendMessage(conversationId: String!, node: String!): Boolean
+    markConversationAsRead(conversationId: String!): Boolean
   }
 
   type Subscription {
     onConversationCreated: Conversation
+    onConversationUpdated: onConversationUpdatedPayload
     onMessageSent(conversationId: String!): Message
+  }
+
+  type onConversationUpdatedPayload {
+    conversation: Conversation!
+    senderId: String!
   }
 
   type CreateUsername {

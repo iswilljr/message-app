@@ -2,14 +2,23 @@ import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { ConversationFragment } from "@client/types/graphql";
 import { formatDate } from "@client/utils/format-data";
 import { formatUsernames } from "@client/utils/format-usernames";
+import { IconPoint } from "@tabler/icons";
 
 interface ConversationItemProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   conversation: ConversationFragment;
   selectedId: string;
   isSelected: boolean;
   userId: string;
+  hasSeenLatestMessage?: boolean;
 }
-export function ConversationItem({ conversation, isSelected, selectedId, userId, ...props }: ConversationItemProps) {
+export function ConversationItem({
+  conversation,
+  isSelected,
+  selectedId,
+  userId,
+  hasSeenLatestMessage: hasSeenLastMessage,
+  ...props
+}: ConversationItemProps) {
   return (
     <Stack
       direction="row"
@@ -23,6 +32,11 @@ export function ConversationItem({ conversation, isSelected, selectedId, userId,
       position="relative"
       {...props}
     >
+      <Flex position="absolute" left="0">
+        {!hasSeenLastMessage && (
+          <IconPoint fill="var(--chakra-colors-green-400)" fontSize={18} color="var(--chakra-colors-green-400)" />
+        )}
+      </Flex>
       <Avatar />
       <Flex flex={1} justify="space-between" width="80%" height="100%">
         <Flex direction="column" width="70%" height="100%">

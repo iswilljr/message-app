@@ -39,7 +39,7 @@ export const sendMessage: MutationResolvers["sendMessage"] = async (
             data: { hasSeenLatestMessage: true },
           },
           updateMany: {
-            where: { NOT: { id: participant.id } },
+            where: { conversationId, NOT: { id: participant.id } },
             data: { hasSeenLatestMessage: false },
           },
         },
@@ -48,7 +48,7 @@ export const sendMessage: MutationResolvers["sendMessage"] = async (
     });
 
     pubsub.publish(SUBSCRIPTIONS.MESSAGE_SENT, { onMessageSent: message });
-    pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, { onConversationUpdated: conversation });
+    pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, { onConversationUpdated: { conversation, senderId: userId } });
 
     return true;
   } catch (error: any) {

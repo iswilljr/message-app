@@ -1,4 +1,5 @@
 import { GraphQLError } from "graphql";
+import { SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 
 export const createConversation: MutationResolvers["createConversation"] = async (
@@ -6,8 +7,8 @@ export const createConversation: MutationResolvers["createConversation"] = async
   { userIds },
   { prisma, session, pubsub }
 ) => {
-  if (!session) throw new GraphQLError("Unauthorized");
-  const userId = session.user?.id;
+  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
+  const { id: userId } = session.user;
 
   const participants = userIds.filter((id) => id !== userId);
 
@@ -29,7 +30,7 @@ export const createConversation: MutationResolvers["createConversation"] = async
       include: populateConversation,
     });
 
-    await pubsub.publish("CONVERSATION_CREATED", { onConversationCreated: conversation });
+    await pubsub.publish(SUBSCRIPTIONS.CONVERSATION_CREATED, { onConversationCreated: conversation });
 
     return { conversationId: conversation.id };
   } catch (error: any) {

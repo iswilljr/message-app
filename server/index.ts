@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 import { PubSub } from "graphql-subscriptions";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
-import { env } from "./env/schema.js";
+import { env } from "./utils/env.js";
 import { schema } from "./schema/index.js";
 import express from "express";
 import http from "http";

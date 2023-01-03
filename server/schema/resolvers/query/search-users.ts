@@ -2,14 +2,14 @@ import { Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
 
 export const searchUsers: QueryResolvers["searchUsers"] = async (_, { id }, { prisma, session }) => {
-  if (!session) throw new GraphQLError("Unauthorized");
+  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
 
   try {
     const users = await prisma.user.findMany({
       where: {
         username: {
           contains: id,
-          not: session.user?.username,
+          not: session.user.username,
           mode: "insensitive",
         },
       },

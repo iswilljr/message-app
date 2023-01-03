@@ -2,11 +2,11 @@ import { Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
 
 export const conversations: QueryResolvers["conversations"] = async (_, _args, { prisma, session }) => {
-  if (!session) throw new GraphQLError("Unauthorized");
+  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
 
   try {
     const conversations = await prisma.conversation.findMany({
-      where: { participants: { some: { userId: { equals: session.user?.id } } } },
+      where: { participants: { some: { userId: { equals: session.user.id } } } },
       include: populateConversation,
       orderBy: { updatedAt: "desc" },
     });
@@ -26,7 +26,7 @@ const populateParticipants = Prisma.validator<Prisma.ConversationParticipantArgs
 });
 
 const populateLastMessages = Prisma.validator<Prisma.MessageArgs>()({
-  select: { id: true, sender: populateUser, node: true, createdAt: true },
+  select: { id: true, conversationId: true, sender: populateUser, node: true, createdAt: true },
 });
 
 export const populateConversation = Prisma.validator<Prisma.ConversationInclude>()({

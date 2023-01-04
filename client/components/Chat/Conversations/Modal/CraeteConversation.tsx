@@ -1,7 +1,8 @@
 import { useMutation } from "@apollo/client";
-import { Avatar, Button, Flex, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Flex, IconButton, List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { CREATE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
 import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@client/types/graphql";
+import { IconMessagePlus } from "@tabler/icons";
 import { useRouter } from "next/router";
 
 interface SearchListProps {
@@ -56,14 +57,16 @@ export function CreateConversation({ users, closeModal }: SearchListProps) {
                   <Avatar />
                   <Flex justify="space-between" align="center" width="100%">
                     <Text color="whiteAlpha.700">{user.username}</Text>
-                    <Button
+                    <IconButton
+                      aria-label="Create new chat"
+                      title="Create new chat"
                       bg={"green.500"}
                       _hover={{ bg: "green.600" }}
                       disabled={loading}
                       onClick={() => createConversation(user.id)}
                     >
-                      Create
-                    </Button>
+                      <IconMessagePlus />
+                    </IconButton>
                   </Flex>
                 </Stack>
               </ListItem>

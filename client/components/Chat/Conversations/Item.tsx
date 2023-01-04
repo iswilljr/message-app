@@ -50,7 +50,12 @@ export function ConversationItem({
             {formatUsernames(conversation.participants, userId)}
           </Text>
           {conversation.latestMessage && (
-            <Box width="140%">
+            <Box width="140%" display="flex">
+              {conversation.latestMessage.sender.id === userId && (
+                <Text color="whiteAlpha.400" mr={1}>
+                  you:{" "}
+                </Text>
+              )}
               <Text color="whiteAlpha.700" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
                 {conversation.latestMessage.node}
               </Text>

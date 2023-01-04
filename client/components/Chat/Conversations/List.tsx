@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { Box, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, List, ListItem } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useChatContext } from "../Context";
 import { ConversationItem } from "./Item";
-import { ConversationModal } from "./Modal/Modal";
 import { ConversationFragment } from "@client/types/graphql";
 
 export interface ConversationListProps {
@@ -12,20 +11,13 @@ export interface ConversationListProps {
 }
 
 export function ConversationList({ conversations, onViewConversation }: ConversationListProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { session } = useChatContext();
   const { conversationId } = router.query;
 
   return (
-    <Box width="100%">
-      <Box py={2} px={4} mb={4} bg="blackAlpha.300" borderRadius={4} cursor="pointer" onClick={onOpen}>
-        <Text align="center" color="whiteAlpha.800">
-          Start a new Conversation
-        </Text>
-      </Box>
-      <ConversationModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-      <List>
+    <Box width="100%" flex={1} overflowY="auto" mb={4}>
+      <List overflowY="auto">
         {conversations?.map((conversation) => {
           const participant = conversation.participants.find((participant) => participant.user.id === session.user?.id);
 

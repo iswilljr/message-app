@@ -63,7 +63,17 @@ export function MessageInput({ conversationId }: MessageInputProps) {
           const conversationIndex = conversations.findIndex((c) => c.id === conversationId);
           if (conversationIndex === -1) return;
           const conversation = { ...conversations.splice(conversationIndex, 1)[0] };
-          conversation.latestMessage && (conversation.latestMessage = { ...conversation.latestMessage, node: message });
+          conversation.latestMessage &&
+            (conversation.latestMessage = {
+              ...conversation.latestMessage,
+              createdAt: new Date().toISOString(),
+              sender: {
+                id: session.user?.id as string,
+                username: session.user?.username,
+                __typename: "User",
+              },
+              node: message,
+            });
 
           cache.writeQuery<ConversationsQuery>({
             query: CONVERSATIONS_QUERY,

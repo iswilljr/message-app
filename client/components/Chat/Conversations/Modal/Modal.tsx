@@ -12,13 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { SEARCH_USERS_QUERY } from "@client/graphql/queries";
 import { useState } from "react";
-import { SearchList } from "./SearchList";
-import { CreateConversation } from "./CreateConversation";
-import type { SearchUsersQuery, SearchUsersQueryVariables, SearchUser } from "@client/types/graphql";
+import { CreateConversation } from "./CraeteConversation";
+import type { SearchUsersQuery, SearchUsersQueryVariables } from "@client/types/graphql";
 
 export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen: () => void; onClose: () => void }) {
   const [username, setUsername] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<SearchUser[]>([]);
 
   const [searchUsers, { loading, data }] = useLazyQuery<SearchUsersQuery, SearchUsersQueryVariables>(
     SEARCH_USERS_QUERY
@@ -47,18 +45,11 @@ export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen
               </Stack>
             </form>
             <Stack mt={6} spacing={4}>
-              <SearchList
-                users={data?.searchUsers}
-                selectedUsers={selectedUsers}
-                selectUser={(user) => setSelectedUsers((prev) => [...prev, user])}
-              />
               <CreateConversation
                 closeModal={() => {
                   onClose();
-                  setSelectedUsers([]);
                 }}
-                selectedUsers={selectedUsers}
-                removeUser={(userId) => setSelectedUsers((prev) => prev.filter((user) => user.id !== userId))}
+                users={data?.searchUsers}
               />
             </Stack>
           </ModalBody>

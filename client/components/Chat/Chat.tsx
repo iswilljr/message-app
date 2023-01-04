@@ -2,9 +2,13 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Flex } from "@chakra-ui/react";
 import { MARK_CONVERSATION_AS_READ_MUTATION } from "@client/graphql/mutations";
 import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
-import { ON_CONVERSATION_CREATED, ON_CONVERSATION_UPDATED } from "@client/graphql/subscriptions";
-import { ConversationCreatedSubscription, ConversationsQuery, ConversationUpdatedSubscription } from "@client/types";
-import { MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables } from "@client/types/graphql";
+import { ON_CONVERSATION_UPDATED } from "@client/graphql/subscriptions";
+import { ConversationsQuery, ConversationUpdatedSubscription } from "@client/types";
+import {
+  ActionType,
+  MarkConversationAsReadMutation,
+  MarkConversationAsReadMutationVariables,
+} from "@client/types/graphql";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useChatContext } from "./Context";
@@ -22,32 +26,30 @@ export function Chat() {
   );
 
   useEffect(() => {
-    const unsubscribeFromCreatedConversations = subscribeToMore<ConversationCreatedSubscription>({
-      document: ON_CONVERSATION_CREATED,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data?.onConversationCreated) return prev;
-        const newConversation = subscriptionData.data.onConversationCreated;
-
-        return {
-          conversations: [newConversation, ...(prev.conversations ?? [])],
-        };
-      },
-    });
-
-    const unsubscribeFromUpdatedConversations = subscribeToMore<ConversationUpdatedSubscription>({
+    const unsubscribe = subscribeToMore<ConversationUpdatedSubscription>({
       document: ON_CONVERSATION_UPDATED,
       updateQuery: (prev, { subscriptionData }) => {
+        const { onConversationUpdated } = subscriptionData.data ?? {};
         if (
-          !subscriptionData.data?.onConversationUpdated ||
-          subscriptionData.data.onConversationUpdated.senderId === session.user?.id
+          !onConversationUpdated ||
+          (onConversationUpdated.actionType === ActionType.Updated &&
+            onConversationUpdated.senderId === session.user?.id)
         )
           return prev;
 
-        const { conversation: newConversation } = subscriptionData.data.onConversationUpdated;
+        const { conversation: newConversation, actionType } = onConversationUpdated;
 
         const conversations = [...(prev.conversations ?? [])].filter(
           (conversation) => conversation.id !== newConversation.id
         );
+
+        if (actionType === ActionType.Deleted) return { conversations };
+
+        if (actionType === ActionType.Created) {
+          return {
+            conversations: [newConversation, ...(prev.conversations ?? [])],
+          };
+        }
 
         if (newConversation.id === conversationId) onViewConversation(conversationId).catch(console.log);
 
@@ -57,10 +59,7 @@ export function Chat() {
       },
     });
 
-    return () => {
-      unsubscribeFromCreatedConversations();
-      unsubscribeFromUpdatedConversations();
-    };
+    return () => unsubscribe();
   }, [conversationId]);
 
   const onViewConversation = async (conversationId: string) => {

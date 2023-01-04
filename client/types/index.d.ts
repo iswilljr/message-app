@@ -1,18 +1,11 @@
-import type { ConversationFragment, MessageFragment } from "./graphql";
+import type { ConversationFragment, MessageFragment, OnConversationUpdatedPayload } from "./graphql";
 
 export interface ConversationsQuery {
   conversations?: ConversationFragment[];
 }
 
-export interface ConversationCreatedSubscription {
-  onConversationCreated?: ConversationFragment;
-}
-
 export interface ConversationUpdatedSubscription {
-  onConversationUpdated?: {
-    conversation: ConversationFragment;
-    senderId: string;
-  };
+  onConversationUpdated?: OnConversationUpdatedPayload;
 }
 
 export interface MessagesQuery {

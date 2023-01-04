@@ -19,7 +19,7 @@
     "start:client": "yarn client start",
     "start:server": "yarn server start",
     "codegen": "graphql-codegen --config utils/codegen.config.ts",
-    "postcodegen": "rimraf client/types/{fragment-masking.ts,index.ts,gql.ts} && mv client/types/graphql.ts client/types/graphql.d.ts",
+    "postcodegen": "rimraf client/types/{fragment-masking.ts,index.ts,gql.ts}",
     "prisma:generate": "prisma generate --schema utils/prisma/schema.prisma",
     "format:check": "prettier -cu .",
     "format": "prettier -wu .",

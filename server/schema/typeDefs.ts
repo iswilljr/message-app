@@ -46,12 +46,12 @@ export const typeDefs = gql`
   type Mutation {
     createUsername(username: String!): CreateUsername
     createConversation(userIds: [String!]!): CreateConversation
+    deleteConversation(conversationId: String!): Boolean
     sendMessage(conversationId: String!, node: String!): Boolean
     markConversationAsRead(conversationId: String!): Boolean
   }
 
   type Subscription {
-    onConversationCreated: Conversation
     onConversationUpdated: onConversationUpdatedPayload
     onMessageSent(conversationId: String!): Message
   }
@@ -59,6 +59,13 @@ export const typeDefs = gql`
   type onConversationUpdatedPayload {
     conversation: Conversation!
     senderId: String!
+    actionType: ActionType!
+  }
+
+  enum ActionType {
+    Created
+    Updated
+    Deleted
   }
 
   type CreateUsername {

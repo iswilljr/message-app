@@ -1,5 +1,6 @@
 import { GraphQLError } from "graphql";
-import { SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
+import { ActionType } from "../../../types/graphql.js";
+import { SubscriptionData, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 import { populateMessage } from "../query/messages.js";
 
@@ -47,8 +48,22 @@ export const sendMessage: MutationResolvers["sendMessage"] = async (
       include: populateConversation,
     });
 
-    pubsub.publish(SUBSCRIPTIONS.MESSAGE_SENT, { onMessageSent: message });
-    pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, { onConversationUpdated: { conversation, senderId: userId } });
+    const conversationUpdatedSubscriptionData: SubscriptionData["conversationUpdated"] = {
+      onConversationUpdated: {
+        conversation,
+        senderId: userId,
+        actionType: ActionType.Updated,
+      },
+    };
+
+    const messageSentSubscriptionData: SubscriptionData["messageSent"] = {
+      onMessageSent: message,
+    };
+
+    Promise.all([
+      pubsub.publish(SUBSCRIPTIONS.MESSAGE_SENT, messageSentSubscriptionData),
+      pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, conversationUpdatedSubscriptionData),
+    ]).catch(console.error);
 
     return true;
   } catch (error: any) {

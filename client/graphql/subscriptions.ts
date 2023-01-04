@@ -1,16 +1,6 @@
 import { gql } from "@apollo/client";
 import { CONVERSATION_FRAGMENT, MESSAGE_FRAGMENT } from "./fragments";
 
-export const ON_CONVERSATION_CREATED = gql`
-  subscription OnConversationCreated {
-    onConversationCreated {
-      ...CONVERSATION
-    }
-  }
-
-  ${CONVERSATION_FRAGMENT}
-`;
-
 export const ON_CONVERSATION_UPDATED = gql`
   subscription OnConversationUpdated {
     onConversationUpdated {

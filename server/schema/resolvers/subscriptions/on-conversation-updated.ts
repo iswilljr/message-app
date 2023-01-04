@@ -1,12 +1,9 @@
 import { withFilter } from "graphql-subscriptions";
-import { Conversation } from "../../../types/graphql.js";
+import { OnConversationUpdatedPayload } from "../../../types/graphql.js";
 import { SUBSCRIPTIONS, Resolver } from "../../../utils/subscriptions.js";
 
 interface OnConversationUpdated {
-  onConversationUpdated: {
-    conversation: Conversation;
-    senderId: string;
-  };
+  onConversationUpdated: OnConversationUpdatedPayload;
 }
 
 const asyncIteratorFn: Resolver<OnConversationUpdated, {}, AsyncIterator<any>> = (_, _args, { pubsub }) => {

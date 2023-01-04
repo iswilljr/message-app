@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useChatContext } from "./Context";
 import { Conversations } from "./Conversations/Conversations";
-import { Feed } from "./Feed/Feed";
+import { Feed } from "./Feed";
 
 export function Chat() {
   const router = useRouter();

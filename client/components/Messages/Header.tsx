@@ -11,13 +11,13 @@ import {
 import { formatUsernames } from "@client/utils/format-usernames";
 import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
 import { useRouter } from "next/router";
-import { useChatContext } from "../../Context";
+import { useChatContext } from "../Context";
 
 interface MessagesHeaderProps {
   conversation?: ConversationFragment;
 }
 
-export default function MessagesHeader({ conversation }: MessagesHeaderProps) {
+export function MessagesHeader({ conversation }: MessagesHeaderProps) {
   const router = useRouter();
   const { conversationId } = router.query;
   const { session } = useChatContext();

@@ -6,7 +6,7 @@ import { ConversationsQuery, MessagesQuery } from "@client/types";
 import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@client/types/graphql";
 import { IconSend } from "@tabler/icons";
 import { useState } from "react";
-import { useChatContext } from "../../Context";
+import { useChatContext } from "../Context";
 
 interface MessageInputProps {
   conversationId?: string;

@@ -3,10 +3,10 @@ import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession, useSession } from "next-auth/react";
 import { Box } from "@chakra-ui/react";
-import { Auth } from "@client/components/Auth/Auth";
-import { Chat } from "@client/components/Chat/Chat";
-import { UsernameForm } from "@client/components/Auth/UsernameForm";
-import { ChatProvider } from "@client/components/Chat/Context";
+import { Auth } from "@client/components/Auth";
+import { Chat } from "@client/components/Chat";
+import { UsernameForm } from "@client/components/UsernameForm";
+import { ChatProvider } from "@client/components/Context";
 
 interface HomeProps {
   session?: Session | null;

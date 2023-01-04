@@ -1,6 +1,6 @@
 import { Flex, Skeleton, SkeletonCircle, Stack } from "@chakra-ui/react";
 
-export default function SkeletonItem() {
+export function SkeletonItem() {
   return (
     <Stack
       height={70}

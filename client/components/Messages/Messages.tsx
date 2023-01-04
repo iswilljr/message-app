@@ -6,7 +6,8 @@ import { MessagesQuery, MessageSubscription } from "@client/types";
 import { MessagesQueryVariables, OnMessageSentSubscriptionVariables } from "@client/types/graphql";
 import { formatDate } from "@client/utils/format-data";
 import { useEffect } from "react";
-import { useChatContext } from "../../Context";
+import { useChatContext } from "../Context";
+import { SkeletonMessages } from "../Skeleton/Messages";
 
 interface MessagesProps {
   conversationId: string;
@@ -14,7 +15,7 @@ interface MessagesProps {
 
 export function Messages({ conversationId }: MessagesProps) {
   const { session } = useChatContext();
-  const { data, subscribeToMore } = useQuery<MessagesQuery, MessagesQueryVariables>(MESSAGES_QUERY, {
+  const { data, loading, subscribeToMore } = useQuery<MessagesQuery, MessagesQueryVariables>(MESSAGES_QUERY, {
     variables: { conversationId },
   });
 
@@ -35,6 +36,8 @@ export function Messages({ conversationId }: MessagesProps) {
 
     return () => unsubscribe();
   }, [conversationId]);
+
+  if (loading) return <SkeletonMessages />;
 
   return (
     <Flex direction="column" justify="flex-end" overflow="hidden" flex={1}>

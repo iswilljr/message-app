@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useChatContext } from "../Context";
 import { ConversationItem } from "./Item";
 import { ConversationFragment } from "@client/types/graphql";
-import SkeletonItem from "./SkeletonItem";
+import { SkeletonItem } from "../Skeleton/Item";
 
 export interface ConversationListProps {
   conversations?: ConversationFragment[];

@@ -10,8 +10,8 @@ export const CREATE_USERNAME_MUTATION = gql`
 `;
 
 export const CREATE_CONVERSATION_MUTATION = gql`
-  mutation CreateConversation($userIds: [String!]!) {
-    createConversation(userIds: $userIds) {
+  mutation CreateConversation($userId: String!) {
+    createConversation(userId: $userId) {
       conversationId
     }
   }

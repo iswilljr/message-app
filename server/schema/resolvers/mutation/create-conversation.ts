@@ -5,26 +5,20 @@ import { populateConversation } from "../query/conversations.js";
 
 export const createConversation: MutationResolvers["createConversation"] = async (
   _,
-  { userIds },
+  { userId },
   { prisma, session, pubsub }
 ) => {
   if (!session?.user?.id) throw new GraphQLError("Unauthorized");
-  const { id: userId } = session.user;
+  const { id: sessionId } = session.user;
 
-  const participants = userIds.filter((id) => id !== userId);
-
-  if (userId) participants.unshift(userId);
-
-  const size = new Set(participants);
-
-  if (size.size < 2 || size.size !== participants.length) throw new GraphQLError("Invalid userids arguments");
+  if (userId === sessionId) throw new GraphQLError("Cannot create a conversation with yourself");
 
   try {
     const conversation = await prisma.conversation.create({
       data: {
         participants: {
           createMany: {
-            data: participants.map((id) => ({ userId: id, hasSeenLatestMessage: id === userId })),
+            data: [sessionId, userId].map((id) => ({ userId: id, hasSeenLatestMessage: id === sessionId })),
           },
         },
       },

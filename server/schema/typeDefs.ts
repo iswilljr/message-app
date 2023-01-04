@@ -44,7 +44,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createConversation(userIds: [String!]!): CreateConversation
+    createConversation(userId: String!): CreateConversation
     createUsername(username: String!): CreateUsername
     deleteConversation(conversationId: String!): Boolean
     markConversationAsRead(conversationId: String!): Boolean

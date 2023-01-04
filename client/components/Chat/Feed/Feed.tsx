@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Grid, Text } from "@chakra-ui/react";
 import { ConversationsQuery } from "@client/types";
 import { useRouter } from "next/router";
 import { MessageInput } from "./Messages/Input";
@@ -22,7 +22,9 @@ export function Feed({ conversations }: FeedProps) {
           <MessageInput conversationId={conversation?.id} />
         </Flex>
       ) : (
-        <Text>No Conversation Selected</Text>
+        <Grid height="100%" placeItems="center">
+          <Text>No Conversation Selected</Text>
+        </Grid>
       )}
     </Flex>
   );

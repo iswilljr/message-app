@@ -28,3 +28,9 @@ export const MARK_CONVERSATION_AS_READ_MUTATION = gql`
     markConversationAsRead(conversationId: $conversationId)
   }
 `;
+
+export const DELETE_CONVERSATION_MUTATION = gql`
+  mutation DeleteConversation($conversationId: String!) {
+    deleteConversation(conversationId: $conversationId)
+  }
+`;

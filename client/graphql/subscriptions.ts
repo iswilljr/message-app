@@ -8,6 +8,7 @@ export const ON_CONVERSATION_UPDATED = gql`
         ...CONVERSATION
       }
       senderId
+      actionType
     }
   }
 

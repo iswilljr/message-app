@@ -16,9 +16,8 @@ import { Conversations } from "./Conversations/Conversations";
 import { Feed } from "./Feed/Feed";
 
 export function Chat() {
-  const {
-    query: { conversationId },
-  } = useRouter();
+  const router = useRouter();
+  const { conversationId } = router.query;
   const { session } = useChatContext();
   const { data, subscribeToMore } = useQuery<ConversationsQuery>(CONVERSATIONS_QUERY);
   const [markConversationAsRead] = useMutation<MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables>(
@@ -32,7 +31,7 @@ export function Chat() {
         const { onConversationUpdated } = subscriptionData.data ?? {};
         if (
           !onConversationUpdated ||
-          (onConversationUpdated.actionType === ActionType.Updated &&
+          (onConversationUpdated.actionType !== ActionType.Created &&
             onConversationUpdated.senderId === session.user?.id)
         )
           return prev;
@@ -43,8 +42,11 @@ export function Chat() {
           (conversation) => conversation.id !== newConversation.id
         );
 
-        if (actionType === ActionType.Deleted) return { conversations };
-
+        if (actionType === ActionType.Deleted) {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          router.replace("/");
+          return { conversations };
+        }
         if (actionType === ActionType.Created) {
           return {
             conversations: [newConversation, ...(prev.conversations ?? [])],

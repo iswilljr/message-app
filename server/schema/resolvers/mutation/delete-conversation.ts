@@ -17,9 +17,17 @@ export const deleteConversation: MutationResolvers["deleteConversation"] = async
       include: populateConversation,
     });
 
-    await prisma.conversation.delete({
-      where: { id: conversation.id },
-    });
+    await prisma.$transaction([
+      prisma.conversation.delete({
+        where: { id: conversation.id },
+      }),
+      prisma.conversationParticipant.deleteMany({
+        where: { conversationId: conversation.id },
+      }),
+      prisma.message.deleteMany({
+        where: { conversationId: conversation.id },
+      }),
+    ]);
 
     const subscriptionData: SubscriptionData["conversationUpdated"] = {
       onConversationUpdated: {

@@ -5,7 +5,9 @@ import { MessageInput } from "./Messages/Input";
 import { Messages } from "./Messages/Messages";
 import MessagesHeader from "./Messages/Header";
 
-interface FeedProps extends ConversationsQuery {}
+interface FeedProps extends ConversationsQuery {
+  loading: boolean;
+}
 
 export function Feed({ conversations }: FeedProps) {
   const router = useRouter();

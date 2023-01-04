@@ -19,7 +19,7 @@ export function Chat() {
   const router = useRouter();
   const { conversationId } = router.query;
   const { session } = useChatContext();
-  const { data, subscribeToMore } = useQuery<ConversationsQuery>(CONVERSATIONS_QUERY);
+  const { data, loading, subscribeToMore } = useQuery<ConversationsQuery>(CONVERSATIONS_QUERY);
   const [markConversationAsRead] = useMutation<MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables>(
     MARK_CONVERSATION_AS_READ_MUTATION
   );
@@ -105,8 +105,8 @@ export function Chat() {
 
   return (
     <Flex height="100vh">
-      <Conversations conversations={data?.conversations} onViewConversation={onViewConversation} />
-      <Feed conversations={data?.conversations} />
+      <Conversations loading={loading} conversations={data?.conversations} onViewConversation={onViewConversation} />
+      <Feed loading={loading} conversations={data?.conversations} />
     </Flex>
   );
 }

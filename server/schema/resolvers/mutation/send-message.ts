@@ -14,7 +14,7 @@ export const sendMessage: MutationResolvers["sendMessage"] = async (
   try {
     const { id: userId } = session.user;
 
-    const [message, participant] = await Promise.all([
+    const [message, participant] = await prisma.$transaction([
       prisma.message.create({
         data: { conversationId, senderId: userId, node },
         include: populateMessage,

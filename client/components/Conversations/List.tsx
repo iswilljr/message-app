@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { Box, List, ListItem } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useChatContext } from "../Context";
 import { ConversationItem } from "./Item";
 import { ConversationFragment } from "@client/types/graphql";
 import { SkeletonItem } from "../Skeleton/Item";
+import { useSession } from "next-auth/react";
 
 export interface ConversationListProps {
   conversations?: ConversationFragment[];
@@ -14,7 +14,7 @@ export interface ConversationListProps {
 
 export function ConversationList({ conversations, loading, onViewConversation }: ConversationListProps) {
   const router = useRouter();
-  const { session } = useChatContext();
+  const { data: session } = useSession();
   const { conversationId } = router.query;
 
   return (
@@ -24,7 +24,7 @@ export function ConversationList({ conversations, loading, onViewConversation }:
           ? [...Array(10)].map((_, i) => <SkeletonItem key={i} />)
           : conversations?.map((conversation) => {
               const participant = conversation.participants.find(
-                (participant) => participant.user.id === session.user?.id
+                (participant) => participant.user.id === session?.user?.id
               );
 
               return (
@@ -33,7 +33,7 @@ export function ConversationList({ conversations, loading, onViewConversation }:
                     conversation={conversation}
                     isSelected={conversation.id === conversationId}
                     selectedId={conversationId as string}
-                    userId={session.user?.id ?? ""}
+                    userId={session?.user?.id ?? ""}
                     hasSeenLatestMessage={participant?.hasSeenLatestMessage}
                     onClick={async () => {
                       const conversationId = conversation.id;

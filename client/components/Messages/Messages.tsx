@@ -5,8 +5,8 @@ import { ON_MESSAGE_SENT } from "@client/graphql/subscriptions";
 import { MessagesQuery, MessageSubscription } from "@client/types";
 import { MessagesQueryVariables, OnMessageSentSubscriptionVariables } from "@client/types/graphql";
 import { formatDate } from "@client/utils/format-data";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { useChatContext } from "../Context";
 import { SkeletonMessages } from "../Skeleton/Messages";
 
 interface MessagesProps {
@@ -14,7 +14,7 @@ interface MessagesProps {
 }
 
 export function Messages({ conversationId }: MessagesProps) {
-  const { session } = useChatContext();
+  const { data: session } = useSession();
   const { data, loading, subscribeToMore } = useQuery<MessagesQuery, MessagesQueryVariables>(MESSAGES_QUERY, {
     variables: { conversationId },
   });
@@ -24,7 +24,10 @@ export function Messages({ conversationId }: MessagesProps) {
       document: ON_MESSAGE_SENT,
       variables: { conversationId },
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data?.onMessageSent || subscriptionData.data.onMessageSent.sender.id === session.user?.id)
+        if (
+          !subscriptionData.data?.onMessageSent ||
+          subscriptionData.data.onMessageSent.sender.id === session?.user?.id
+        )
           return prev;
         const newMessage = subscriptionData.data.onMessageSent;
 
@@ -43,7 +46,7 @@ export function Messages({ conversationId }: MessagesProps) {
     <Flex direction="column" justify="flex-end" overflow="hidden" flex={1}>
       <Flex direction="column-reverse" height="100%" overflowY="auto">
         {data?.messages?.map((message) => {
-          const isSentByMe = session.user?.id === message.sender.id;
+          const isSentByMe = session?.user?.id === message.sender.id;
 
           return (
             <Stack

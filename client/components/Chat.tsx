@@ -9,16 +9,16 @@ import {
   MarkConversationAsReadMutation,
   MarkConversationAsReadMutationVariables,
 } from "@client/types/graphql";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useChatContext } from "./Context";
 import { Conversations } from "./Conversations/Conversations";
 import { Feed } from "./Feed";
 
 export function Chat() {
   const router = useRouter();
   const { conversationId } = router.query;
-  const { session } = useChatContext();
+  const { data: session } = useSession();
   const { data, loading, subscribeToMore } = useQuery<ConversationsQuery>(CONVERSATIONS_QUERY);
   const [markConversationAsRead] = useMutation<MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables>(
     MARK_CONVERSATION_AS_READ_MUTATION
@@ -32,7 +32,7 @@ export function Chat() {
         if (
           !onConversationUpdated ||
           (onConversationUpdated.actionType !== ActionType.Created &&
-            onConversationUpdated.senderId === session.user?.id)
+            onConversationUpdated.senderId === session?.user?.id)
         )
           return prev;
 
@@ -79,7 +79,7 @@ export function Chat() {
           const newData = (cacheConversations?.conversations ?? []).map((cacheConversation) => {
             if (cacheConversation.id !== conversationId) return cacheConversation;
             const participants = [...cacheConversation.participants];
-            const userParticipantIdx = participants.findIndex((p) => p.user.id === session.user?.id);
+            const userParticipantIdx = participants.findIndex((p) => p.user.id === session?.user?.id);
             if (userParticipantIdx === -1) return cacheConversation;
             const userParticipant = participants[userParticipantIdx];
             participants[userParticipantIdx] = {

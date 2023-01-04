@@ -5,15 +5,15 @@ import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@client/graphql/queries";
 import { ConversationsQuery, MessagesQuery } from "@client/types";
 import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@client/types/graphql";
 import { IconSend } from "@tabler/icons";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { useChatContext } from "../Context";
 
 interface MessageInputProps {
   conversationId?: string;
 }
 
 export function MessageInput({ conversationId }: MessageInputProps) {
-  const { session } = useChatContext();
+  const { data: session } = useSession();
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [sendMessageMutation] = useMutation<SendMessageMutation, SendMessageMutationVariables>(SEND_MESSAGE_MUTATION);
@@ -49,8 +49,8 @@ export function MessageInput({ conversationId }: MessageInputProps) {
                   node: message,
                   sender: {
                     __typename: "User",
-                    id: session.user?.id as string,
-                    username: session.user?.username,
+                    id: session?.user?.id as string,
+                    username: session?.user?.username,
                   },
                 },
                 ...(cacheData?.messages ?? []),
@@ -68,8 +68,8 @@ export function MessageInput({ conversationId }: MessageInputProps) {
               ...conversation.latestMessage,
               createdAt: new Date().toISOString(),
               sender: {
-                id: session.user?.id as string,
-                username: session.user?.username,
+                id: session?.user?.id as string,
+                username: session?.user?.username,
                 __typename: "User",
               },
               node: message,

@@ -10,8 +10,8 @@ import {
 } from "@client/types/graphql";
 import { formatUsernames } from "@client/utils/format-usernames";
 import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useChatContext } from "../Context";
 
 interface MessagesHeaderProps {
   conversation?: ConversationFragment;
@@ -20,7 +20,7 @@ interface MessagesHeaderProps {
 export function MessagesHeader({ conversation }: MessagesHeaderProps) {
   const router = useRouter();
   const { conversationId } = router.query;
-  const { session } = useChatContext();
+  const { data: session } = useSession();
 
   const [deleteConversationMutation, { loading }] = useMutation<
     DeleteConversationMutation,
@@ -76,7 +76,7 @@ export function MessagesHeader({ conversation }: MessagesHeaderProps) {
       <Stack direction="row" justify="space-between" align="center" width="100%" pr={4}>
         <Stack direction="row" align="center">
           <Text color="whiteAlpha.600">To:</Text>
-          <Text fontWeight={600}>{formatUsernames(conversation?.participants ?? [], session.user?.id ?? "")}</Text>
+          <Text fontWeight={600}>{formatUsernames(conversation?.participants ?? [], session?.user?.id ?? "")}</Text>
         </Stack>
         <IconButton aria-label="Delete conversation" onClick={() => deleteConversation()}>
           <IconTrash />

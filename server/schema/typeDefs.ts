@@ -10,15 +10,15 @@ export const typeDefs = gql`
 
   type User {
     id: String!
-    username: String
     email: String
     image: String
+    username: String
   }
 
   type Conversation {
     id: String!
-    participants: [Participants!]!
     latestMessage: Message
+    participants: [Participants!]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -32,23 +32,23 @@ export const typeDefs = gql`
   type Message {
     id: String!
     conversationId: String!
-    sender: User!
     node: String!
+    sender: User!
     createdAt: Date!
   }
 
   type Query {
-    searchUsers(id: String!): [SearchUser!]
     conversations: [Conversation!]
     messages(conversationId: String!): [Message!]
+    searchUsers(id: String!): [SearchUser!]
   }
 
   type Mutation {
-    createUsername(username: String!): CreateUsername
     createConversation(userIds: [String!]!): CreateConversation
+    createUsername(username: String!): CreateUsername
     deleteConversation(conversationId: String!): Boolean
-    sendMessage(conversationId: String!, node: String!): Boolean
     markConversationAsRead(conversationId: String!): Boolean
+    sendMessage(conversationId: String!, node: String!): Boolean
   }
 
   type Subscription {
@@ -57,15 +57,15 @@ export const typeDefs = gql`
   }
 
   type onConversationUpdatedPayload {
+    actionType: ActionType!
     conversation: Conversation!
     senderId: String!
-    actionType: ActionType!
   }
 
   enum ActionType {
     Created
-    Updated
     Deleted
+    Updated
   }
 
   type CreateUsername {

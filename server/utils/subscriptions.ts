@@ -1,4 +1,4 @@
-import { Message, OnConversationUpdatedPayload } from "../types/graphql.js";
+import type { Message, OnConversationUpdatedPayload } from "../types/graphql.js";
 
 export enum SUBSCRIPTIONS {
   CONVERSATION_UPDATED = "0",

@@ -1,8 +1,8 @@
 import { Avatar, Box, Flex, Text } from "@mantine/core";
-import { ConversationFragment } from "@/types/graphql";
+import { IconPoint } from "@tabler/icons";
 import { formatDate } from "@/utils/format-data";
 import { formatUsernames } from "@/utils/format-usernames";
-import { IconPoint } from "@tabler/icons";
+import type { ConversationFragment } from "@/types/graphql";
 
 interface ConversationItemProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   conversation: ConversationFragment;

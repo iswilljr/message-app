@@ -1,13 +1,13 @@
-import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { Avatar, Box, Flex, Stack, Text } from "@mantine/core";
+import { useQuery } from "@apollo/client";
+import { formatDate } from "@/utils/format-data";
 import { MESSAGES_QUERY } from "@/graphql/queries";
 import { ON_MESSAGE_SENT } from "@/graphql/subscriptions";
-import { MessagesQuery, MessageSubscription } from "@/types";
-import { MessagesQueryVariables, OnMessageSentSubscriptionVariables } from "@/types/graphql";
-import { formatDate } from "@/utils/format-data";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import { SkeletonMessages } from "../Skeleton/Messages";
+import type { MessageSubscription, MessagesQuery } from "@/types";
+import type { MessagesQueryVariables, OnMessageSentSubscriptionVariables } from "@/types/graphql";
 
 interface MessagesProps {
   conversationId: string;

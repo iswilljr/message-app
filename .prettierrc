@@ -2,5 +2,28 @@
   "printWidth": 120,
   "semi": true,
   "singleQuote": false,
-  "tabWidth": 2
+  "tabWidth": 2,
+  "importOrder": [
+    "^dotenv/(.*)",
+    "^react$",
+    "^next$",
+    "^next/(.*)$",
+    "^next-auth$",
+    "^next-auth/(.*)$",
+    "^@prisma/client$",
+    "^@next-auth/prisma-adapter$",
+    "^@mantine/(.*)$",
+    "^@apollo/(.*)$",
+    "^@graphql-tools/schema$",
+    "^@tabler/icons$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/components/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/graphql/(.*)$",
+    "^@/env/(.*)$",
+    "^[./]",
+    "@/types"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true
 }

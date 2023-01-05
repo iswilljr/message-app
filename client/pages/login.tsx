@@ -1,5 +1,5 @@
-import { Button, Center, Stack, Text } from "@mantine/core";
 import { signIn } from "next-auth/react";
+import { Button, Center, Stack, Text } from "@mantine/core";
 import { createAuthComponent } from "@/utils/create-auth-component";
 
 export default function Login() {

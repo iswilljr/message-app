@@ -1,5 +1,5 @@
-import { Flex, Skeleton, Stack } from "@mantine/core";
 import { useRef } from "react";
+import { Flex, Skeleton, Stack } from "@mantine/core";
 
 interface SkeletonMessageProps {
   index: number;

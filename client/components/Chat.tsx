@@ -1,16 +1,16 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useCallback, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { Flex } from "@mantine/core";
+import { useMutation, useQuery } from "@apollo/client";
+import { toast } from "react-hot-toast";
 import { MARK_CONVERSATION_AS_READ_MUTATION } from "@/graphql/mutations";
 import { CONVERSATIONS_QUERY } from "@/graphql/queries";
 import { ON_CONVERSATION_UPDATED } from "@/graphql/subscriptions";
-import { ConversationsQuery, ConversationUpdatedSubscription } from "@/types";
-import { ActionType, MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables } from "@/types/graphql";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react";
 import { Conversations } from "./Conversations/Conversations";
 import { Feed } from "./Feed";
-import { toast } from "react-hot-toast";
+import { ConversationUpdatedSubscription, ConversationsQuery } from "@/types";
+import { ActionType, MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables } from "@/types/graphql";
 
 export function Chat() {
   const router = useRouter();

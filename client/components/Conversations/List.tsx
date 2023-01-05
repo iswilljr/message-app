@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { Box, Center, ScrollArea, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { ConversationItem } from "./Item";
-import { ConversationFragment } from "@/types/graphql";
-import { SkeletonItem } from "../Skeleton/Item";
 import { useSession } from "next-auth/react";
+import { Box, Center, ScrollArea, Text } from "@mantine/core";
 import { IconMessagesOff } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
+import { SkeletonItem } from "../Skeleton/Item";
+import { ConversationItem } from "./Item";
+import type { ConversationFragment } from "@/types/graphql";
 
 export interface ConversationListProps {
   conversations?: ConversationFragment[];

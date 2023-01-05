@@ -1,13 +1,13 @@
-import {
-  Resolvers as GraphQLResolvers,
-  QueryResolvers as GraphQLQueryResolvers,
-  MutationResolvers as GraphQLMutationResolvers,
-  SubscriptionResolvers as GraphQLSubscriptionResolvers,
-} from "./graphql.js";
-import type { PrismaClient } from "@prisma/client";
 import type { Session } from "next-auth";
+import type { PrismaClient } from "@prisma/client";
 import type { PubSub } from "graphql-subscriptions";
 import type { Context as GraphQLSubscriptionContext } from "graphql-ws";
+import {
+  MutationResolvers as GraphQLMutationResolvers,
+  QueryResolvers as GraphQLQueryResolvers,
+  Resolvers as GraphQLResolvers,
+  SubscriptionResolvers as GraphQLSubscriptionResolvers,
+} from "./graphql.js";
 
 declare global {
   interface Context {

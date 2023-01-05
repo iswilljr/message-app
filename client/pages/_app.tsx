@@ -1,10 +1,10 @@
-import { ApolloProvider } from "@apollo/client";
-import { SessionProvider } from "next-auth/react";
-import { theme } from "@/utils/theme";
-import { client } from "@/utils/apollo";
 import type { AppProps } from "next/app";
-import { MantineProvider } from "@mantine/core";
 import dynamic from "next/dynamic";
+import { SessionProvider } from "next-auth/react";
+import { MantineProvider } from "@mantine/core";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "@/utils/apollo";
+import { theme } from "@/utils/theme";
 
 const Toaster = dynamic(async () => (await import("react-hot-toast")).Toaster, { ssr: false });
 

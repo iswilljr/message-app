@@ -1,11 +1,11 @@
-import { useMutation } from "@apollo/client";
-import { Avatar, Flex, List, Stack, Text, ActionIcon } from "@mantine/core";
-import { CREATE_CONVERSATION_MUTATION } from "@/graphql/mutations";
-import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@/types/graphql";
-import { IconMessagePlus } from "@tabler/icons";
-import { useRouter } from "next/router";
-import { toast } from "react-hot-toast";
 import { useCallback } from "react";
+import { useRouter } from "next/router";
+import { ActionIcon, Avatar, Flex, List, Stack, Text } from "@mantine/core";
+import { useMutation } from "@apollo/client";
+import { IconMessagePlus } from "@tabler/icons";
+import { toast } from "react-hot-toast";
+import { CREATE_CONVERSATION_MUTATION } from "@/graphql/mutations";
+import type { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@/types/graphql";
 
 interface SearchListProps {
   users?: SearchUser[] | null;

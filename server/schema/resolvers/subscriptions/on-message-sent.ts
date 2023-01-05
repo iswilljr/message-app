@@ -1,6 +1,6 @@
 import { withFilter } from "graphql-subscriptions";
 import { Message, SubscriptionOnMessageSentArgs } from "../../../types/graphql.js";
-import { SUBSCRIPTIONS, Resolver } from "../../../utils/subscriptions.js";
+import { Resolver, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 
 interface OnMessageSent {

@@ -1,12 +1,12 @@
-import { createAuthComponent } from "@/utils/create-auth-component";
 import { useCallback, useState } from "react";
-import { useMutation } from "@apollo/client";
-import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
-import { CREATE_USERNAME_MUTATION } from "@/graphql/mutations";
-import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@/types/graphql";
 import { useRouter } from "next/router";
-import { toast } from "react-hot-toast";
+import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
+import { useMutation } from "@apollo/client";
 import { IconUserPlus } from "@tabler/icons";
+import { toast } from "react-hot-toast";
+import { createAuthComponent } from "@/utils/create-auth-component";
+import { CREATE_USERNAME_MUTATION } from "@/graphql/mutations";
+import type { CreateUsernameMutation, CreateUsernameMutationVariables } from "@/types/graphql";
 
 export default function Profile() {
   const router = useRouter();

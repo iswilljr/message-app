@@ -1,13 +1,13 @@
+import { useCallback, useState } from "react";
+import { useSession } from "next-auth/react";
+import { ActionIcon, Box, Flex, TextInput } from "@mantine/core";
 import { useMutation } from "@apollo/client";
-import { Box, Flex, ActionIcon, TextInput } from "@mantine/core";
+import { IconSend } from "@tabler/icons";
+import { toast } from "react-hot-toast";
 import { SEND_MESSAGE_MUTATION } from "@/graphql/mutations";
 import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@/graphql/queries";
-import { ConversationsQuery, MessagesQuery } from "@/types";
-import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@/types/graphql";
-import { IconSend } from "@tabler/icons";
-import { useSession } from "next-auth/react";
-import { useCallback, useState } from "react";
-import { toast } from "react-hot-toast";
+import type { ConversationsQuery, MessagesQuery } from "@/types";
+import type { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@/types/graphql";
 
 interface MessageInputProps {
   conversationId: string;

@@ -1,11 +1,11 @@
-import { Box, Flex } from "@mantine/core";
-import { ConversationsQuery } from "@/types";
 import { useRouter } from "next/router";
+import { Box, Flex } from "@mantine/core";
+import { MessagesHeader } from "./Messages/Header";
 import { MessageInput } from "./Messages/Input";
 import { Messages } from "./Messages/Messages";
-import { MessagesHeader } from "./Messages/Header";
+import { NoConversation } from "./NoConversation";
 import { SkeletonFeed } from "./Skeleton/Feed";
-import NoConversation from "./NoConversation";
+import type { ConversationsQuery } from "@/types";
 
 interface FeedProps extends ConversationsQuery {
   loading: boolean;

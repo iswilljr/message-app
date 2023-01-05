@@ -1,15 +1,19 @@
-import { useMutation } from "@apollo/client";
+import { useCallback } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { ActionIcon, Flex, Stack, Text } from "@mantine/core";
+import { useMutation } from "@apollo/client";
+import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
+import { toast } from "react-hot-toast";
+import { formatUsernames } from "@/utils/format-usernames";
 import { DELETE_CONVERSATION_MUTATION } from "@/graphql/mutations";
 import { CONVERSATIONS_QUERY } from "@/graphql/queries";
-import { ConversationsQuery } from "@/types";
-import { ConversationFragment, DeleteConversationMutation, DeleteConversationMutationVariables } from "@/types/graphql";
-import { formatUsernames } from "@/utils/format-usernames";
-import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useCallback } from "react";
-import { toast } from "react-hot-toast";
+import type { ConversationsQuery } from "@/types";
+import type {
+  ConversationFragment,
+  DeleteConversationMutation,
+  DeleteConversationMutationVariables,
+} from "@/types/graphql";
 
 interface MessagesHeaderProps {
   conversation: ConversationFragment;

@@ -1,10 +1,10 @@
-import { Box, Button } from "@mantine/core";
 import { useRouter } from "next/router";
-import { ConversationModal } from "./Modal/Modal";
-import { ConversationList, ConversationListProps } from "./List";
 import { signOut } from "next-auth/react";
-import { IconLogout, IconPencilPlus } from "@tabler/icons";
+import { Box, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconLogout, IconPencilPlus } from "@tabler/icons";
+import { ConversationList, ConversationListProps } from "./List";
+import { ConversationModal } from "./Modal/Modal";
 
 export function Conversations(props: ConversationListProps) {
   const [isOpen, { close: onClose, open: onOpen }] = useDisclosure(false);

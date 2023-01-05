@@ -1,12 +1,12 @@
 import { Center, Text } from "@mantine/core";
-import { IconMessage, IconMessages, IconMessagePlus } from "@tabler/icons";
+import { IconMessage, IconMessagePlus, IconMessages } from "@tabler/icons";
 
 interface NoConversationProps {
   loading: boolean;
   hasConversations: boolean;
 }
 
-export default function NoConversation({ loading, hasConversations }: NoConversationProps) {
+export function NoConversation({ loading, hasConversations }: NoConversationProps) {
   const Icon = loading ? IconMessage : hasConversations ? IconMessages : IconMessagePlus;
   const text = loading
     ? "Loading conversations..."

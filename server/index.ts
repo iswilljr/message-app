@@ -1,17 +1,17 @@
 import "dotenv/config";
+import { getSession } from "next-auth/react";
+import { PrismaClient } from "@prisma/client";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { PrismaClient } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import cors from "cors";
+import express from "express";
 import { PubSub } from "graphql-subscriptions";
 import { useServer } from "graphql-ws/lib/use/ws";
-import { WebSocketServer } from "ws";
-import { env } from "./utils/env.js";
-import { schema } from "./schema/index.js";
-import express from "express";
 import http from "http";
-import cors from "cors";
+import { WebSocketServer } from "ws";
+import { schema } from "./schema/index.js";
+import { env } from "./utils/env.js";
 import { logger } from "./utils/logger.js";
 
 const app = express();

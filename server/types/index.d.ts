@@ -11,9 +11,17 @@ import type { Context as GraphQLSubscriptionContext } from "graphql-ws";
 
 declare global {
   interface Context {
-    session?: Session | null;
+    session: Session;
     prisma: PrismaClient;
     pubsub: PubSub;
+  }
+
+  interface UnsafeSession extends Session {
+    user?: Session["user"] & { id?: string };
+  }
+
+  interface UnsafeContext extends Context {
+    session?: UnsafeSession | null;
   }
 
   interface SubscriptionContext extends GraphQLSubscriptionContext {
@@ -22,13 +30,17 @@ declare global {
     };
   }
 
-  interface Resolvers extends GraphQLResolvers<Context> {}
+  type NoUndefinedField<T> = { [P in keyof T]-?: Exclude<T[P], null | undefined> };
 
-  interface QueryResolvers extends GraphQLQueryResolvers<Context> {}
+  type NoUndefinedObjField<T> = { [P in keyof T]?: NoUndefinedField<T[P]> };
 
-  interface MutationResolvers extends GraphQLMutationResolvers<Context> {}
+  type Resolvers = NoUndefinedObjField<GraphQLResolvers<Context>>;
 
-  interface SubscriptionResolvers extends GraphQLSubscriptionResolvers<Context> {}
+  type QueryResolvers = NoUndefinedField<GraphQLQueryResolvers<Context>>;
+
+  type MutationResolvers = NoUndefinedField<GraphQLMutationResolvers<Context>>;
+
+  type SubscriptionResolvers = NoUndefinedField<GraphQLSubscriptionResolvers<Context>>;
 }
 
 export {};

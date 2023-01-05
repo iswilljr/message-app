@@ -12,6 +12,7 @@ import { schema } from "./schema/index.js";
 import express from "express";
 import http from "http";
 import cors from "cors";
+import { logger } from "./utils/logger.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -28,7 +29,7 @@ const wsServer = new WebSocketServer({
 const serverCleanup = useServer(
   {
     schema,
-    context: (ctx: SubscriptionContext): Context => ({
+    context: (ctx: SubscriptionContext): UnsafeContext => ({
       session: ctx.connectionParams?.session ?? null,
       prisma,
       pubsub,
@@ -37,7 +38,7 @@ const serverCleanup = useServer(
   wsServer
 );
 
-const server = new ApolloServer<Context>({
+const server = new ApolloServer<UnsafeContext>({
   schema,
   csrfPrevention: true,
   cache: "bounded",
@@ -63,14 +64,14 @@ app.use(
     credentials: true,
   }),
   express.json(),
-  expressMiddleware<Context>(server, {
-    context: async ({ req }): Promise<Context> => {
+  expressMiddleware<UnsafeContext>(server, {
+    context: async ({ req }): Promise<UnsafeContext> => {
       const session = await getSession({ req });
       return { session, prisma, pubsub };
     },
   })
 );
 
-await new Promise<void>((resolve) => httpServer.listen({ port: 4001 }, resolve));
+await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
 
-console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+logger.ready(`started server on 0.0.0.0:4000, url: http://localhost:4000`);

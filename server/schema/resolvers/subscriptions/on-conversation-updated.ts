@@ -11,7 +11,7 @@ const asyncIteratorFn: Resolver<OnConversationUpdated, {}, AsyncIterator<any>> =
   return asyncIterator;
 };
 
-const filterFn: Resolver<OnConversationUpdated, {}, boolean> = (payload, _args, { pubsub, session }) => {
+const filterFn: Resolver<OnConversationUpdated, {}, boolean> = (payload, _args, { pubsub, session }: UnsafeContext) => {
   const isParticipant = payload.onConversationUpdated.conversation.participants.findIndex(
     (participant) => participant.user.id === session?.user?.id
   );

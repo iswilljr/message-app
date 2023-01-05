@@ -1,8 +1,4 @@
-import { GraphQLError } from "graphql";
-
 export const createUsername: MutationResolvers["createUsername"] = async (_, { username }, { prisma, session }) => {
-  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
-
   try {
     const user = await prisma.user.findUnique({ where: { username } });
 

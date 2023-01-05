@@ -1,20 +1,13 @@
 import { Prisma } from "@prisma/client";
-import { GraphQLError } from "graphql";
 
 export const conversations: QueryResolvers["conversations"] = async (_, _args, { prisma, session }) => {
-  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
+  const conversations = await prisma.conversation.findMany({
+    where: { participants: { some: { userId: { equals: session.user.id } } } },
+    include: populateConversation,
+    orderBy: { updatedAt: "desc" },
+  });
 
-  try {
-    const conversations = await prisma.conversation.findMany({
-      where: { participants: { some: { userId: { equals: session.user.id } } } },
-      include: populateConversation,
-      orderBy: { updatedAt: "desc" },
-    });
-
-    return conversations;
-  } catch (error: any) {
-    throw new GraphQLError(error.message);
-  }
+  return conversations;
 };
 
 const populateUser = Prisma.validator<Prisma.UserArgs>()({

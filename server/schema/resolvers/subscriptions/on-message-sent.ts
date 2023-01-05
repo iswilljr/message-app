@@ -15,7 +15,7 @@ const asyncIteratorFn: Resolver<OnMessageSent, {}, AsyncIterator<any>> = (_, _ar
 const filterFn: Resolver<OnMessageSent, SubscriptionOnMessageSentArgs, Promise<boolean>> = async (
   { onMessageSent },
   { conversationId },
-  { session, prisma }
+  { session, prisma }: UnsafeContext
 ) => {
   const isUserParticipatingInConversation = async () => {
     try {

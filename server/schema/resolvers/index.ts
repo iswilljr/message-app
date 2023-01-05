@@ -1,3 +1,4 @@
+import { resolverWrapper } from "../../utils/resolver-wrapper.js";
 import { createConversation } from "./mutation/create-conversation.js";
 import { createUsername } from "./mutation/create-username.js";
 import { deleteConversation } from "./mutation/delete-conversation.js";
@@ -11,16 +12,16 @@ import { onMessageSent } from "./subscriptions/on-message-sent.js";
 
 export const resolvers: Resolvers = {
   Query: {
-    conversations,
-    messages,
-    searchUsers,
+    conversations: resolverWrapper(conversations),
+    messages: resolverWrapper(messages),
+    searchUsers: resolverWrapper(searchUsers),
   },
   Mutation: {
-    createConversation,
-    createUsername,
-    deleteConversation,
-    markConversationAsRead,
-    sendMessage,
+    createConversation: resolverWrapper(createConversation),
+    createUsername: resolverWrapper(createUsername),
+    deleteConversation: resolverWrapper(deleteConversation),
+    markConversationAsRead: resolverWrapper(markConversationAsRead),
+    sendMessage: resolverWrapper(sendMessage),
   },
   Subscription: {
     onConversationUpdated,

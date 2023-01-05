@@ -1,4 +1,5 @@
 import { z, ZodFormattedError } from "zod";
+import { logger } from "./logger.js";
 
 export const serverSchema = z.object({
   MONGODB_URI: z.string().url(),
@@ -17,7 +18,7 @@ const formatErrors = (errors: ZodFormattedError<Map<string, string>, string>) =>
 const _serverEnv = serverSchema.safeParse(process.env);
 
 if (!_serverEnv.success) {
-  console.error("❌ Invalid environment variables:\n", ...formatErrors(_serverEnv.error.format()));
+  logger.error("❌ Invalid environment variables:\n", ...formatErrors(_serverEnv.error.format()));
   process.exit(1);
 }
 

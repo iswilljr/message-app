@@ -8,35 +8,30 @@ export const createConversation: MutationResolvers["createConversation"] = async
   { userId },
   { prisma, session, pubsub }
 ) => {
-  if (!session?.user?.id) throw new GraphQLError("Unauthorized");
   const { id: sessionId } = session.user;
 
   if (userId === sessionId) throw new GraphQLError("Cannot create a conversation with yourself");
 
-  try {
-    const conversation = await prisma.conversation.create({
-      data: {
-        participants: {
-          createMany: {
-            data: [sessionId, userId].map((id) => ({ userId: id, hasSeenLatestMessage: id === sessionId })),
-          },
+  const conversation = await prisma.conversation.create({
+    data: {
+      participants: {
+        createMany: {
+          data: [sessionId, userId].map((id) => ({ userId: id, hasSeenLatestMessage: id === sessionId })),
         },
       },
-      include: populateConversation,
-    });
+    },
+    include: populateConversation,
+  });
 
-    const subscriptionData: SubscriptionData["conversationUpdated"] = {
-      onConversationUpdated: {
-        conversation,
-        senderId: session.user.id,
-        actionType: ActionType.Created,
-      },
-    };
+  const subscriptionData: SubscriptionData["conversationUpdated"] = {
+    onConversationUpdated: {
+      conversation,
+      senderId: session.user.id,
+      actionType: ActionType.Created,
+    },
+  };
 
-    await pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, subscriptionData);
+  await pubsub.publish(SUBSCRIPTIONS.CONVERSATION_UPDATED, subscriptionData);
 
-    return { conversationId: conversation.id };
-  } catch (error: any) {
-    throw new GraphQLError(error.message);
-  }
+  return { conversationId: conversation.id };
 };

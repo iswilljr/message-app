@@ -38,7 +38,7 @@ export function Messages({ conversationId }: MessagesProps) {
     });
 
     return () => unsubscribe();
-  }, [conversationId]);
+  }, [conversationId, session?.user?.id, subscribeToMore]);
 
   if (loading) return <SkeletonMessages />;
 

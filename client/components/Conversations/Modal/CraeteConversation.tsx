@@ -30,7 +30,7 @@ export function CreateConversation({ users, closeModal }: SearchListProps) {
 
       const { conversationId } = data.createConversation;
 
-      await router.push({ query: { conversationId } });
+      void router.push({ query: { conversationId } });
 
       closeModal();
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@mantine/core";
+import { Box, Button } from "@mantine/core";
 import { useRouter } from "next/router";
 import { ConversationModal } from "./Modal/Modal";
 import { ConversationList, ConversationListProps } from "./List";
@@ -30,10 +30,11 @@ export function Conversations(props: ConversationListProps) {
         radius="md"
         bg="black.4"
         onClick={onOpen}
+        ta="center"
+        h="auto"
+        color="white.9"
       >
-        <Text align="center" color="white.9">
-          Start a new Conversation
-        </Text>
+        Start a new Conversation
       </Button>
       <ConversationModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <ConversationList {...props} />

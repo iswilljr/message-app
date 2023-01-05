@@ -20,7 +20,7 @@ const createAlphaColors = (
 };
 
 export const theme: MantineThemeOverride = {
-  globalStyles: (theme) => ({ ul: { listStyle: "none" } }),
+  globalStyles: (theme) => ({ ul: { padding: 0, margin: 0, listStyle: "none" } }),
   colorScheme: "dark",
   primaryColor: "white",
   focusRing: "never",

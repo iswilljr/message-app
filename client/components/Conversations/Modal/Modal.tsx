@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { Button, Input, Modal, Stack } from "@mantine/core";
+import { Button, Modal, Stack, TextInput } from "@mantine/core";
 import { SEARCH_USERS_QUERY } from "@client/graphql/queries";
 import { useState } from "react";
 import { CreateConversation } from "./CraeteConversation";
@@ -24,7 +24,12 @@ export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen
       <Modal opened={isOpen} onClose={onClose} title="Create a Conversation">
         <form onSubmit={onSubmit}>
           <Stack spacing="md">
-            <Input placeholder="Enter a username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <TextInput
+              type="text"
+              placeholder="Enter a username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <Button type="submit" leftIcon={<IconSearch size={20} />} disabled={loading || !username} loading={loading}>
               Search
             </Button>

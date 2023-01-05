@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Box, Flex, Input, ActionIcon } from "@mantine/core";
+import { Box, Flex, ActionIcon, TextInput } from "@mantine/core";
 import { SEND_MESSAGE_MUTATION } from "@client/graphql/mutations";
 import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@client/graphql/queries";
 import { ConversationsQuery, MessagesQuery } from "@client/types";
@@ -96,7 +96,7 @@ export function MessageInput({ conversationId }: MessageInputProps) {
     <Box p="md" w="100%">
       <form onSubmit={sendMessage}>
         <Flex w="100%" justify="space-between" gap={4}>
-          <Input
+          <TextInput
             placeholder="Write down a message..."
             size="md"
             sx={{ flex: 1 }}

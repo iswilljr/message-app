@@ -1,7 +1,7 @@
 import { createAuthComponent } from "@client/utils/create-auth-component";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Button, Center, Input, Stack } from "@mantine/core";
+import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
 import { CREATE_USERNAME_MUTATION } from "@client/graphql/mutations";
 import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@client/types/graphql";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ export default function Profile() {
         <Stack>
           <Input.Wrapper>
             <Input.Label htmlFor="username">Enter your username</Input.Label>
-            <Input
+            <TextInput
               id="username"
               mt="sm"
               type="text"

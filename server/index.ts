@@ -24,6 +24,7 @@ const wsServer = new WebSocketServer({
   path: "/graphql",
 });
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const serverCleanup = useServer(
   {
     schema,

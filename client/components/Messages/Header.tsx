@@ -12,6 +12,8 @@ import { formatUsernames } from "@client/utils/format-usernames";
 import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { toast } from "react-hot-toast";
 
 interface MessagesHeaderProps {
   conversation: ConversationFragment;
@@ -27,7 +29,7 @@ export function MessagesHeader({ conversation }: MessagesHeaderProps) {
     DeleteConversationMutationVariables
   >(DELETE_CONVERSATION_MUTATION);
 
-  const deleteConversation = async () => {
+  const deleteConversation = useCallback(async () => {
     if (!conversationId || loading) return;
 
     try {
@@ -54,9 +56,9 @@ export function MessagesHeader({ conversation }: MessagesHeaderProps) {
         throw Error(errors?.[0].message ?? "Something went wrong. Please, try again later");
       }
     } catch (error: any) {
-      console.log(error.message);
+      toast.error(error.message);
     }
-  };
+  }, [conversationId, loading, deleteConversationMutation, router]);
 
   return (
     <Stack

@@ -19,28 +19,34 @@ export function Conversations(props: ConversationListProps) {
       sx={(theme) => ({
         flexDirection: "column",
         backgroundColor: theme.colors.white[0],
-        padding: `${theme.spacing.md}px ${theme.spacing.sm}px`,
+        paddingTop: theme.spacing.md,
+        paddingBottom: theme.spacing.md,
       })}
     >
-      <Button
-        rightIcon={<IconPencilPlus size={20} />}
-        py="sm"
-        px="md"
-        mb="md"
-        radius="md"
-        bg="black.4"
-        onClick={onOpen}
-        ta="center"
-        h="auto"
-        color="white.9"
-      >
-        Start a new Conversation
-      </Button>
+      <Box px="sm">
+        <Button
+          rightIcon={<IconPencilPlus size={20} />}
+          py="sm"
+          px="md"
+          mb="md"
+          radius="md"
+          bg="black.4"
+          onClick={onOpen}
+          w="100%"
+          ta="center"
+          h="auto"
+          color="white.9"
+        >
+          Start a new Conversation
+        </Button>
+      </Box>
       <ConversationModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <ConversationList {...props} />
-      <Button leftIcon={<IconLogout />} onClick={() => signOut()} w="100%">
-        Logout
-      </Button>
+      <Box px="sm">
+        <Button leftIcon={<IconLogout />} onClick={() => signOut()} w="100%">
+          Logout
+        </Button>
+      </Box>
     </Box>
   );
 }

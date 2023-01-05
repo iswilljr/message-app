@@ -6,7 +6,8 @@ import { ConversationsQuery, MessagesQuery } from "@client/types";
 import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@client/types/graphql";
 import { IconSend } from "@tabler/icons";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface MessageInputProps {
   conversationId: string;
@@ -18,79 +19,82 @@ export function MessageInput({ conversationId }: MessageInputProps) {
   const [sending, setSending] = useState(false);
   const [sendMessageMutation] = useMutation<SendMessageMutation, SendMessageMutationVariables>(SEND_MESSAGE_MUTATION);
 
-  const sendMessage: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
+  const sendMessage: React.FormEventHandler<HTMLFormElement> = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    if (sending || !message) return;
-    setSending(true);
+      if (sending || !message) return;
+      setSending(true);
 
-    try {
-      setMessage("");
+      try {
+        setMessage("");
 
-      const { data, errors } = await sendMessageMutation({
-        variables: { conversationId, node: message },
-        optimisticResponse: { sendMessage: true },
-        update(cache) {
-          const cacheData = cache.readQuery<MessagesQuery, QueryMessagesArgs>({
-            query: MESSAGES_QUERY,
-            variables: { conversationId },
-          });
-
-          cache.writeQuery<MessagesQuery, QueryMessagesArgs>({
-            query: MESSAGES_QUERY,
-            variables: { conversationId },
-            data: {
-              messages: [
-                {
-                  __typename: "Message",
-                  conversationId,
-                  createdAt: new Date().toISOString(),
-                  id: `trn-${Math.random()}`,
-                  node: message,
-                  sender: {
-                    __typename: "User",
-                    id: session?.user?.id as string,
-                    username: session?.user?.username,
-                  },
-                },
-                ...(cacheData?.messages ?? []),
-              ],
-            },
-          });
-
-          const cacheConversations = cache.readQuery<ConversationsQuery>({ query: CONVERSATIONS_QUERY });
-          const conversations = [...(cacheConversations?.conversations ?? [])];
-          const conversationIndex = conversations.findIndex((c) => c.id === conversationId);
-          if (conversationIndex === -1) return;
-          const conversation = { ...conversations.splice(conversationIndex, 1)[0] };
-          conversation.latestMessage &&
-            (conversation.latestMessage = {
-              ...conversation.latestMessage,
-              createdAt: new Date().toISOString(),
-              sender: {
-                id: session?.user?.id as string,
-                username: session?.user?.username,
-                __typename: "User",
-              },
-              node: message,
+        const { data, errors } = await sendMessageMutation({
+          variables: { conversationId, node: message },
+          optimisticResponse: { sendMessage: true },
+          update(cache) {
+            const cacheData = cache.readQuery<MessagesQuery, QueryMessagesArgs>({
+              query: MESSAGES_QUERY,
+              variables: { conversationId },
             });
 
-          cache.writeQuery<ConversationsQuery>({
-            query: CONVERSATIONS_QUERY,
-            data: { conversations: [conversation, ...conversations] },
-          });
-        },
-      });
+            cache.writeQuery<MessagesQuery, QueryMessagesArgs>({
+              query: MESSAGES_QUERY,
+              variables: { conversationId },
+              data: {
+                messages: [
+                  {
+                    __typename: "Message",
+                    conversationId,
+                    createdAt: new Date().toISOString(),
+                    id: `trn-${Math.random()}`,
+                    node: message,
+                    sender: {
+                      __typename: "User",
+                      id: session?.user?.id as string,
+                      username: session?.user?.username,
+                    },
+                  },
+                  ...(cacheData?.messages ?? []),
+                ],
+              },
+            });
 
-      if (!data?.sendMessage || errors) {
-        throw Error(errors?.[0].message ?? "Something went wrong. Please, try again later");
+            const cacheConversations = cache.readQuery<ConversationsQuery>({ query: CONVERSATIONS_QUERY });
+            const conversations = [...(cacheConversations?.conversations ?? [])];
+            const conversationIndex = conversations.findIndex((c) => c.id === conversationId);
+            if (conversationIndex === -1) return;
+            const conversation = { ...conversations.splice(conversationIndex, 1)[0] };
+            conversation.latestMessage &&
+              (conversation.latestMessage = {
+                ...conversation.latestMessage,
+                createdAt: new Date().toISOString(),
+                sender: {
+                  id: session?.user?.id as string,
+                  username: session?.user?.username,
+                  __typename: "User",
+                },
+                node: message,
+              });
+
+            cache.writeQuery<ConversationsQuery>({
+              query: CONVERSATIONS_QUERY,
+              data: { conversations: [conversation, ...conversations] },
+            });
+          },
+        });
+
+        if (!data?.sendMessage || errors) {
+          throw Error(errors?.[0].message ?? "Something went wrong. Please, try again later");
+        }
+      } catch (error: any) {
+        toast.error(error?.message);
+      } finally {
+        setSending(false);
       }
-    } catch (error: any) {
-      console.log(error.message);
-    } finally {
-      setSending(false);
-    }
-  };
+    },
+    [conversationId, message, sending, sendMessageMutation, session?.user?.username, session?.user?.id]
+  );
 
   return (
     <Box p="md" w="100%">

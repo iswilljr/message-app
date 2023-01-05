@@ -1,38 +1,46 @@
 import { createAuthComponent } from "@client/utils/create-auth-component";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
 import { CREATE_USERNAME_MUTATION } from "@client/graphql/mutations";
 import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@client/types/graphql";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
+import { IconUserPlus } from "@tabler/icons";
 
 export default function Profile() {
   const router = useRouter();
+  const [created, setCreated] = useState(false);
   const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState<string>();
   const [createUsername, { loading }] = useMutation<CreateUsernameMutation, CreateUsernameMutationVariables>(
     CREATE_USERNAME_MUTATION
   );
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    try {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    async (e) => {
       e.preventDefault();
-      if (!username) return setUsernameError("Please, enter your username");
-      setUsernameError("");
+      if (!username) return toast("Please, enter your username");
+      if (created) return;
 
-      const { data, errors } = await createUsername({ variables: { username } });
+      try {
+        const { data, errors } = await createUsername({ variables: { username } });
+        if (!data?.createUsername?.success) {
+          throw Error(
+            data?.createUsername?.error ?? errors?.at(0)?.message ?? "Something went wrong. Please, try again later"
+          );
+        }
 
-      if (!data?.createUsername?.success) {
-        setUsernameError(
-          data?.createUsername?.error ?? errors?.at(0)?.message ?? "Something went wrong. Please, try again later"
-        );
+        setCreated(true);
+        setUsername("");
+        toast.success("Username created");
+
+        void router.replace("/");
+      } catch (error: any) {
+        toast.error(error.message);
       }
-
-      void router.replace("/");
-    } catch (error: any) {
-      setUsernameError(error.message);
-    }
-  };
+    },
+    [createUsername, created, username, router]
+  );
 
   return (
     <Center sx={{ height: "100vh" }}>
@@ -48,13 +56,14 @@ export default function Profile() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            {usernameError && (
-              <Input.Error mt="sm" sx={(theme) => ({ color: theme.colors.red[6] })}>
-                {usernameError}
-              </Input.Error>
-            )}
           </Input.Wrapper>
-          <Button type="submit" disabled={loading}>
+          <Button
+            type="submit"
+            rightIcon={<IconUserPlus size={18} />}
+            loaderPosition="right"
+            loading={loading}
+            disabled={created || loading || !username}
+          >
             Create
           </Button>
         </Stack>
@@ -63,12 +72,4 @@ export default function Profile() {
   );
 }
 
-export const getServerSideProps = createAuthComponent({
-  redirect: "/login",
-  onAuth(ctx, session) {
-    if (session.user?.username) {
-      return { redirect: { destination: "/", permanent: false } };
-    }
-    return { props: { session } };
-  },
-});
+export const getServerSideProps = createAuthComponent({ redirect: "/login" });

@@ -4,6 +4,8 @@ import { CREATE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
 import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@client/types/graphql";
 import { IconMessagePlus } from "@tabler/icons";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
+import { useCallback } from "react";
 
 interface SearchListProps {
   users?: SearchUser[] | null;
@@ -18,25 +20,30 @@ export function CreateConversation({ users, closeModal }: SearchListProps) {
     CreateConversationMutationVariables
   >(CREATE_CONVERSATION_MUTATION);
 
-  const createConversation = async (userId: string) => {
-    try {
-      const { data, errors } = await createConversationMutation({
-        variables: { userId },
-      });
+  const createConversation = useCallback(
+    async (userId: string) => {
+      try {
+        const { data, errors } = await createConversationMutation({
+          variables: { userId },
+        });
 
-      if (!data?.createConversation) {
-        throw Error(errors?.[0].message ?? "Something went wrong. Please, try again later");
+        if (!data?.createConversation) {
+          throw Error(errors?.[0].message ?? "Something went wrong. Please, try again later");
+        }
+
+        toast.success("Conversation created");
+
+        const { conversationId } = data.createConversation;
+
+        void router.push({ query: { conversationId } });
+
+        closeModal();
+      } catch (error: any) {
+        toast.error(error.message);
       }
-
-      const { conversationId } = data.createConversation;
-
-      void router.push({ query: { conversationId } });
-
-      closeModal();
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
+    },
+    [closeModal, createConversationMutation, router]
+  );
 
   return (
     <>

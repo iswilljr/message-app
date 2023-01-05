@@ -11,9 +11,10 @@ import {
 } from "@client/types/graphql";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Conversations } from "./Conversations/Conversations";
 import { Feed } from "./Feed";
+import { toast } from "react-hot-toast";
 
 export function Chat() {
   const router = useRouter();
@@ -22,6 +23,48 @@ export function Chat() {
   const { data, loading, subscribeToMore } = useQuery<ConversationsQuery>(CONVERSATIONS_QUERY);
   const [markConversationAsRead] = useMutation<MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables>(
     MARK_CONVERSATION_AS_READ_MUTATION
+  );
+
+  const onViewConversation = useCallback(
+    async (conversationId: string) => {
+      try {
+        await markConversationAsRead({
+          variables: { conversationId },
+          optimisticResponse: { markConversationAsRead: true },
+          update: (cache) => {
+            const cacheConversations = cache.readQuery<ConversationsQuery>({
+              query: CONVERSATIONS_QUERY,
+            });
+
+            if (!cacheConversations) return;
+
+            const newData = (cacheConversations?.conversations ?? []).map((cacheConversation) => {
+              if (cacheConversation.id !== conversationId) return cacheConversation;
+              const participants = [...cacheConversation.participants];
+              const userParticipantIdx = participants.findIndex((p) => p.user.id === session?.user?.id);
+              if (userParticipantIdx === -1) return cacheConversation;
+              const userParticipant = participants[userParticipantIdx];
+              participants[userParticipantIdx] = {
+                ...userParticipant,
+                hasSeenLatestMessage: true,
+              };
+              return {
+                ...cacheConversation,
+                participants,
+              };
+            });
+
+            cache.writeQuery<ConversationsQuery>({
+              query: CONVERSATIONS_QUERY,
+              data: { conversations: newData },
+            });
+          },
+        });
+      } catch (error: any) {
+        toast.error(error?.message);
+      }
+    },
+    [markConversationAsRead, session?.user?.id]
   );
 
   useEffect(() => {
@@ -53,7 +96,9 @@ export function Chat() {
           };
         }
 
-        if (newConversation.id === conversationId) onViewConversation(conversationId).catch(console.log);
+        if (newConversation.id === conversationId) {
+          onViewConversation(conversationId).catch((err) => toast.error(err.message));
+        }
 
         return {
           conversations: [newConversation, ...conversations],
@@ -62,46 +107,7 @@ export function Chat() {
     });
 
     return () => unsubscribe();
-  }, [conversationId]);
-
-  const onViewConversation = async (conversationId: string) => {
-    try {
-      await markConversationAsRead({
-        variables: { conversationId },
-        optimisticResponse: { markConversationAsRead: true },
-        update: (cache) => {
-          const cacheConversations = cache.readQuery<ConversationsQuery>({
-            query: CONVERSATIONS_QUERY,
-          });
-
-          if (!cacheConversations) return;
-
-          const newData = (cacheConversations?.conversations ?? []).map((cacheConversation) => {
-            if (cacheConversation.id !== conversationId) return cacheConversation;
-            const participants = [...cacheConversation.participants];
-            const userParticipantIdx = participants.findIndex((p) => p.user.id === session?.user?.id);
-            if (userParticipantIdx === -1) return cacheConversation;
-            const userParticipant = participants[userParticipantIdx];
-            participants[userParticipantIdx] = {
-              ...userParticipant,
-              hasSeenLatestMessage: true,
-            };
-            return {
-              ...cacheConversation,
-              participants,
-            };
-          });
-
-          cache.writeQuery<ConversationsQuery>({
-            query: CONVERSATIONS_QUERY,
-            data: { conversations: newData },
-          });
-        },
-      });
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
+  }, [conversationId, subscribeToMore, onViewConversation, router, session?.user?.id]);
 
   return (
     <Flex sx={{ height: "100vh", overflow: "hidden" }}>

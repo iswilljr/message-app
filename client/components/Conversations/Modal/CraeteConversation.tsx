@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Avatar, Flex, IconButton, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Flex, List, Stack, Text, ActionIcon } from "@mantine/core";
 import { CREATE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
 import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@client/types/graphql";
 import { IconMessagePlus } from "@tabler/icons";
@@ -44,32 +44,37 @@ export function CreateConversation({ users, closeModal }: SearchListProps) {
         (users.length > 0 ? (
           <List>
             {users.map((user) => (
-              <ListItem key={user.id}>
+              <List.Item key={user.id}>
                 <Stack
-                  direction="row"
+                  w="100%"
                   align="center"
-                  spacing={4}
-                  py={2}
-                  px={4}
-                  borderRadius={4}
-                  _hover={{ bg: "whiteAlpha.200" }}
+                  spacing="xs"
+                  px="xs"
+                  py={4}
+                  sx={(theme) => ({
+                    borderRadius: theme.radius.md,
+                    flexDirection: "row",
+                    ":hover": { backgroundColor: theme.colors.white[2] },
+                  })}
                 >
-                  <Avatar />
-                  <Flex justify="space-between" align="center" width="100%">
-                    <Text color="whiteAlpha.700">{user.username}</Text>
-                    <IconButton
+                  <Avatar size={50} src={user.image} alt={user?.username ?? ""} radius="xl" />
+                  <Flex justify="space-between" align="center" sx={{ flex: 1 }}>
+                    <Text color="white.8" sx={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
+                      {user.username}
+                    </Text>
+                    <ActionIcon
                       aria-label="Create new chat"
                       title="Create new chat"
-                      bg={"green.500"}
-                      _hover={{ bg: "green.600" }}
+                      bg="green.6"
+                      sx={(theme) => ({ ":hover": { backgroundColor: theme.colors.green[7] } })}
                       disabled={loading}
                       onClick={() => createConversation(user.id)}
                     >
                       <IconMessagePlus />
-                    </IconButton>
+                    </ActionIcon>
                   </Flex>
                 </Stack>
-              </ListItem>
+              </List.Item>
             ))}
           </List>
         ) : (

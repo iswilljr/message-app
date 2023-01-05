@@ -25,4 +25,5 @@ export const searchUsers: QueryResolvers["searchUsers"] = async (_, { id }, { pr
 const populateUser = Prisma.validator<Prisma.UserSelect>()({
   id: true,
   username: true,
+  image: true,
 });

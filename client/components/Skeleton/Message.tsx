@@ -1,4 +1,4 @@
-import { Flex, Skeleton, SkeletonCircle, Stack } from "@chakra-ui/react";
+import { Flex, Skeleton, Stack } from "@mantine/core";
 import { useRef } from "react";
 
 export function SkeletonMessage() {
@@ -6,17 +6,13 @@ export function SkeletonMessage() {
   const width = useRef(widths.sort(() => (Math.random() > 0.5 ? 1 : -1))[0]).current;
 
   return (
-    <Stack direction="row" py={2} px={4} spacing={2} wordBreak="break-word">
+    <Stack sx={{ flexDirection: "row", wordBreak: "break-word" }} py={4} px="md" spacing={4}>
       <Flex align="flex-end">
-        <SkeletonCircle w="20px" h="20px" />
+        <Skeleton radius="xl" w="26px" h="26px" />
       </Flex>
-      <Stack spacing={1} width="100%">
-        <Stack direction="row" align="center">
-          <Skeleton mr="1" width="150px" height="15px" />
-        </Stack>
-        <Flex>
-          <Skeleton bg="whiteAlpha.100" px={2} py={1} borderRadius={4} width={width} h={50}></Skeleton>
-        </Flex>
+      <Stack spacing={1} w="100%">
+        <Skeleton width="50px" height="15px" />
+        <Skeleton mt={4} bg="white.2" px="sm" py="xs" radius="md" width={width} h={30}></Skeleton>
       </Stack>
     </Stack>
   );

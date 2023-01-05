@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Flex } from "@chakra-ui/react";
+import { Flex } from "@mantine/core";
 import { MARK_CONVERSATION_AS_READ_MUTATION } from "@client/graphql/mutations";
 import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
 import { ON_CONVERSATION_UPDATED } from "@client/graphql/subscriptions";
@@ -104,7 +104,7 @@ export function Chat() {
   };
 
   return (
-    <Flex height="100vh">
+    <Flex sx={{ height: "100vh", overflow: "hidden" }}>
       <Conversations loading={loading} conversations={data?.conversations} onViewConversation={onViewConversation} />
       <Feed loading={loading} conversations={data?.conversations} />
     </Flex>

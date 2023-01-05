@@ -9,6 +9,7 @@ export const CONVERSATION_FRAGMENT = gql`
       user {
         id
         username
+        image
       }
     }
     latestMessage {
@@ -16,6 +17,7 @@ export const CONVERSATION_FRAGMENT = gql`
       sender {
         id
         username
+        image
       }
       node
       createdAt
@@ -33,6 +35,7 @@ export const MESSAGE_FRAGMENT = gql`
     sender {
       id
       username
+      image
     }
     createdAt
   }

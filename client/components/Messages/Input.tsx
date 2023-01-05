@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Box, Flex, Input, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Input, ActionIcon } from "@mantine/core";
 import { SEND_MESSAGE_MUTATION } from "@client/graphql/mutations";
 import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@client/graphql/queries";
 import { ConversationsQuery, MessagesQuery } from "@client/types";
@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 interface MessageInputProps {
-  conversationId?: string;
+  conversationId: string;
 }
 
 export function MessageInput({ conversationId }: MessageInputProps) {
@@ -21,7 +21,7 @@ export function MessageInput({ conversationId }: MessageInputProps) {
   const sendMessage: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    if (!conversationId || sending || !message) return;
+    if (sending || !message) return;
     setSending(true);
 
     try {
@@ -93,27 +93,40 @@ export function MessageInput({ conversationId }: MessageInputProps) {
   };
 
   return (
-    <Box px={4} py={6} width="100%">
+    <Box p="md" w="100%">
       <form onSubmit={sendMessage}>
-        <Flex gap={2}>
+        <Flex w="100%" justify="space-between" gap={4}>
           <Input
             placeholder="Write down a message..."
             size="md"
-            _focus={{ boxShadow: "none", borderColor: "whiteAlpha.500" }}
-            _hover={{ borderColor: "whiteAlpha.400" }}
+            sx={{ flex: 1 }}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <IconButton
+          <ActionIcon
             aria-label="Send Message"
             disabled={sending || !message}
+            size="lg"
+            h="100%"
             type="submit"
-            _focus={{ boxShadow: "none", border: "1px solid", borderColor: "whiteAlpha.500" }}
-            // __css={{ "&:hover:not(:disabled)": {  } }}
-            _hover={{ "&:not(:disabled)": { border: "1px solid", borderColor: "whiteAlpha.400" } }}
+            sx={(theme) => ({
+              ":hover": { backgroundColor: theme.colors.white[4] },
+              ":disabled": {
+                backgroundColor: theme.colors.white[2],
+                cursor: "not-allowed",
+                color: theme.colors.white[5],
+              },
+              ":focus": {
+                boxShadow: "none",
+                border: `1px solid ${theme.colors.white[6]}`,
+              },
+              "&:hover:not(:disabled)": {
+                border: `1px solid ${theme.colors.white[5]}`,
+              },
+            })}
           >
             <IconSend />
-          </IconButton>
+          </ActionIcon>
         </Flex>
       </form>
     </Box>

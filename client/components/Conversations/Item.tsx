@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text } from "@mantine/core";
 import { ConversationFragment } from "@client/types/graphql";
 import { formatDate } from "@client/utils/format-data";
 import { formatUsernames } from "@client/utils/format-usernames";
@@ -19,53 +19,59 @@ export function ConversationItem({
   hasSeenLatestMessage: hasSeenLastMessage,
   ...props
 }: ConversationItemProps) {
+  const otherParticipant = conversation.participants.find((p) => p.user.id !== userId);
+
   return (
-    <Stack
-      direction="row"
+    <Flex
       align="center"
       justify="space-between"
-      p={4}
-      cursor="pointer"
-      borderRadius={4}
-      bg={conversation.id === selectedId ? "whiteAlpha.200" : "none"}
-      _hover={{ bg: "whiteAlpha.100" }}
-      position="relative"
+      p="xs"
+      pl="lg"
+      h={70}
+      gap="xs"
+      sx={(theme) => ({
+        position: "relative",
+        backgroundColor: conversation.id === selectedId ? theme.colors.white[3] : "none",
+        borderRadius: theme.radius.md,
+        ":hover": {
+          backgroundColor: theme.colors.white[2],
+        },
+      })}
       {...props}
     >
-      <Flex position="absolute" left="0">
+      <Flex sx={{ position: "absolute", left: -2 }}>
         {!hasSeenLastMessage && (
-          <IconPoint fill="var(--chakra-colors-green-400)" fontSize={18} color="var(--chakra-colors-green-400)" />
+          <IconPoint fill="var(--mantine-color-green-5)" fontSize={18} color="var(--mantine-color-green-5)" />
         )}
       </Flex>
-      <Avatar />
-      <Flex flex={1} justify="space-between" width="80%" height="100%">
-        <Flex direction="column" width="70%" height="100%">
+      <Avatar src={otherParticipant?.user.image} alt={otherParticipant?.user.username ?? ""} radius="xl" />
+      <Flex sx={{ flex: 1 }} justify="space-between" w="80%" h="100%">
+        <Flex direction="column" w="70%" h="100%">
           <Text
             title={formatUsernames(conversation.participants, "userId")}
-            fontWeight={600}
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
+            weight={600}
+            color="white.7"
+            sx={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
           >
             {formatUsernames(conversation.participants, userId)}
           </Text>
           {conversation.latestMessage && (
-            <Box width="140%" display="flex">
+            <Box w="140%" display="flex">
               {conversation.latestMessage.sender.id === userId && (
-                <Text color="whiteAlpha.400" mr={1}>
+                <Text color="white.5" mr={4}>
                   you:{" "}
                 </Text>
               )}
-              <Text color="whiteAlpha.700" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
+              <Text color="white.8" sx={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {conversation.latestMessage.node}
               </Text>
             </Box>
           )}
         </Flex>
-        <Text color="whiteAlpha.700" textAlign="right">
+        <Text color="white.8" align="right">
           {formatDate(conversation.updatedAt)}
         </Text>
       </Flex>
-    </Stack>
+    </Flex>
   );
 }

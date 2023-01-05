@@ -6,6 +6,7 @@ export const typeDefs = gql`
   type SearchUser {
     id: String!
     username: String
+    image: String
   }
 
   type User {

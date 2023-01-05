@@ -1,33 +1,40 @@
-import { Box, Flex, Skeleton, Stack, Text } from "@chakra-ui/react";
+import { ActionIcon, Box, Flex, Skeleton, Stack, Text } from "@mantine/core";
+import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
+import { useRouter } from "next/router";
 import { SkeletonMessages } from "./Messages";
 
 export function SkeletonFeed() {
+  const router = useRouter();
+
   return (
-    <Flex direction="column" justify="space-between" overflow="hidden" flexGrow={1}>
+    <Flex direction="column" justify="space-between" sx={{ overflow: "hidden", flexGrow: 1 }}>
       <Stack
-        direction="row"
         align="center"
-        spacing={6}
-        py={5}
-        px={{ base: 4, md: 0 }}
-        borderBottom="1px solid"
-        borderColor="whiteAlpha.200"
-        bg="whiteAlpha.100"
-        width="100%"
+        spacing="lg"
+        py="lg"
+        px="md"
+        sx={(theme) => ({ flexDirection: "row", borderBottom: `1px solid ${theme.colors.white[3]}` })}
+        bg="white.2"
+        w="100%"
       >
-        <Stack direction="row" justify="space-between" align="center" width="100%" px={4}>
-          <Stack direction="row" align="center">
-            <Text color="whiteAlpha.600">To:</Text>
+        <ActionIcon aria-label="Go back" display={{ base: "flex", sm: "none" }} onClick={() => router.replace("/")}>
+          <IconArrowNarrowLeft />
+        </ActionIcon>
+        <Flex sx={{ flex: 1, overflow: "hidden" }} justify="space-between" align="center">
+          <Flex gap={8} sx={{ flexDirection: "row", overflow: "hidden" }} align="center">
+            <Text color="white.5">To:</Text>
             <Skeleton width="100px" height="15px" />
-          </Stack>
-          <Skeleton borderRadius={6} w="30px" h="30px" />
-        </Stack>
+          </Flex>
+          <ActionIcon disabled ml="md" aria-label="Delete conversation">
+            <IconTrash />
+          </ActionIcon>
+        </Flex>
       </Stack>
       <SkeletonMessages />
-      <Box px={4} py={6} w="100%">
-        <Flex gap={2} h="100%" align="center">
-          <Skeleton width="100%" h="40px" />
-          <Skeleton borderRadius={6} w="40px" h="40px" />
+      <Box p="md" w="100%">
+        <Flex w="100%" justify="space-between" gap={4}>
+          <Skeleton width="100%" h="34px" />
+          <Skeleton radius="sm" w="36px" h="34px" />
         </Flex>
       </Box>
     </Flex>

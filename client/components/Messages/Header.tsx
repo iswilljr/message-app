@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { IconButton, Stack, Text } from "@chakra-ui/react";
+import { ActionIcon, Flex, Stack, Text } from "@mantine/core";
 import { DELETE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
 import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
 import { ConversationsQuery } from "@client/types";
@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 interface MessagesHeaderProps {
-  conversation?: ConversationFragment;
+  conversation: ConversationFragment;
 }
 
 export function MessagesHeader({ conversation }: MessagesHeaderProps) {
@@ -60,28 +60,32 @@ export function MessagesHeader({ conversation }: MessagesHeaderProps) {
 
   return (
     <Stack
-      direction="row"
       align="center"
-      spacing={6}
-      py={5}
-      px={{ base: 4, md: 0 }}
-      borderBottom="1px solid"
-      borderColor="whiteAlpha.200"
-      bg="whiteAlpha.100"
-      width="100%"
+      spacing="lg"
+      py="lg"
+      px="md"
+      sx={(theme) => ({ flexDirection: "row", borderBottom: `1px solid ${theme.colors.white[3]}` })}
+      bg="white.2"
+      w="100%"
     >
-      <IconButton aria-label="Go back" display={{ base: "flex", md: "none" }} onClick={() => router.replace("/")}>
+      <ActionIcon aria-label="Go back" display={{ base: "flex", sm: "none" }} onClick={() => router.replace("/")}>
         <IconArrowNarrowLeft />
-      </IconButton>
-      <Stack direction="row" justify="space-between" align="center" width="100%" pr={4}>
-        <Stack direction="row" align="center">
-          <Text color="whiteAlpha.600">To:</Text>
-          <Text fontWeight={600}>{formatUsernames(conversation?.participants ?? [], session?.user?.id ?? "")}</Text>
-        </Stack>
-        <IconButton aria-label="Delete conversation" onClick={() => deleteConversation()}>
+      </ActionIcon>
+      <Flex sx={{ flex: 1, overflow: "hidden" }} justify="space-between" align="center">
+        <Flex gap={8} sx={{ flexDirection: "row", overflow: "hidden" }} align="center">
+          <Text color="white.5">To:</Text>
+          <Text
+            weight={600}
+            color="white.9"
+            sx={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {formatUsernames(conversation.participants ?? [], session?.user?.id ?? "")}
+          </Text>
+        </Flex>
+        <ActionIcon ml="md" disabled={loading} aria-label="Delete conversation" onClick={() => deleteConversation()}>
           <IconTrash />
-        </IconButton>
-      </Stack>
+        </ActionIcon>
+      </Flex>
     </Stack>
   );
 }

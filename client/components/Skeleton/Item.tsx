@@ -1,25 +1,25 @@
-import { Flex, Skeleton, SkeletonCircle, Stack } from "@chakra-ui/react";
+import { Flex, Skeleton } from "@mantine/core";
 
 export function SkeletonItem() {
   return (
-    <Stack
-      height={70}
-      direction="row"
+    <Flex
+      h={70}
+      sx={(theme) => ({ position: "relative", flexDirection: "row", borderRadius: theme.spacing.md })}
       align="center"
       justify="space-between"
-      p={4}
-      borderRadius={4}
-      position="relative"
-      pr={5}
+      p="xs"
+      pl="lg"
+      gap="xs"
+      pos="relative"
     >
-      <SkeletonCircle ml={2} w="48px" height="48px" />
-      <Flex flex={1} justify="space-between" width="80%" height="100%">
-        <Flex direction="column" width="70%" justify="space-between" height="100%">
-          <Skeleton width="100%" height="10px" />
+      <Skeleton radius="xl" w="38px" height="38px" />
+      <Flex sx={{ flex: 1 }} justify="space-between" w="80%" h="100%">
+        <Flex gap="xs" direction="column" w="100%" justify="center" h="100%">
+          <Skeleton width="50%" height="10px" />
           <Skeleton width="100%" height="20px" />
         </Flex>
-        <Skeleton width="70px" height="10px" />
+        <Skeleton sx={(theme) => ({ position: "absolute", right: theme.spacing.xs })} width="70px" height="10px" />
       </Flex>
-    </Stack>
+    </Flex>
   );
 }

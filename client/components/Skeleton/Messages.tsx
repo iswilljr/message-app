@@ -1,10 +1,10 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex } from "@mantine/core";
 import { SkeletonMessage } from "./Message";
 
 export function SkeletonMessages() {
   return (
-    <Flex direction="column" justify="flex-end" overflow="hidden" flex={1}>
-      <Flex direction="column-reverse" height="100%" overflowY="hidden">
+    <Flex direction="column" justify="flex-end" sx={{ overflow: "hidden", flex: 1 }}>
+      <Flex gap={4} direction="column-reverse" h="100%" sx={{ overflow: "hidden" }}>
         {[...Array(50)].map((_, i) => (
           <SkeletonMessage key={i} />
         ))}

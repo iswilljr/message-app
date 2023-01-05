@@ -6,6 +6,7 @@ export const SEARCH_USERS_QUERY = gql`
     searchUsers(id: $searchUsersId) {
       id
       username
+      image
     }
   }
 `;

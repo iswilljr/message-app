@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { Avatar, Flex, List, Stack, Text, ActionIcon } from "@mantine/core";
-import { CREATE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
-import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@client/types/graphql";
+import { CREATE_CONVERSATION_MUTATION } from "@/graphql/mutations";
+import { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@/types/graphql";
 import { IconMessagePlus } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";

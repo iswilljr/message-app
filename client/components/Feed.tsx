@@ -1,5 +1,5 @@
 import { Box, Flex } from "@mantine/core";
-import { ConversationsQuery } from "@client/types";
+import { ConversationsQuery } from "@/types";
 import { useRouter } from "next/router";
 import { MessageInput } from "./Messages/Input";
 import { Messages } from "./Messages/Messages";

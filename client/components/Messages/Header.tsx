@@ -1,14 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { ActionIcon, Flex, Stack, Text } from "@mantine/core";
-import { DELETE_CONVERSATION_MUTATION } from "@client/graphql/mutations";
-import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
-import { ConversationsQuery } from "@client/types";
-import {
-  ConversationFragment,
-  DeleteConversationMutation,
-  DeleteConversationMutationVariables,
-} from "@client/types/graphql";
-import { formatUsernames } from "@client/utils/format-usernames";
+import { DELETE_CONVERSATION_MUTATION } from "@/graphql/mutations";
+import { CONVERSATIONS_QUERY } from "@/graphql/queries";
+import { ConversationsQuery } from "@/types";
+import { ConversationFragment, DeleteConversationMutation, DeleteConversationMutationVariables } from "@/types/graphql";
+import { formatUsernames } from "@/utils/format-usernames";
 import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

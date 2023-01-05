@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { Box, Flex, ActionIcon, TextInput } from "@mantine/core";
-import { SEND_MESSAGE_MUTATION } from "@client/graphql/mutations";
-import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@client/graphql/queries";
-import { ConversationsQuery, MessagesQuery } from "@client/types";
-import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@client/types/graphql";
+import { SEND_MESSAGE_MUTATION } from "@/graphql/mutations";
+import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@/graphql/queries";
+import { ConversationsQuery, MessagesQuery } from "@/types";
+import { QueryMessagesArgs, SendMessageMutation, SendMessageMutationVariables } from "@/types/graphql";
 import { IconSend } from "@tabler/icons";
 import { useSession } from "next-auth/react";
 import { useCallback, useState } from "react";

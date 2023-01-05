@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "next-auth/react";
-import { theme } from "@client/utils/theme";
-import { client } from "@client/utils/apollo";
+import { theme } from "@/utils/theme";
+import { client } from "@/utils/apollo";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import dynamic from "next/dynamic";

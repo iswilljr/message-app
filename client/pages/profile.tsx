@@ -1,9 +1,9 @@
-import { createAuthComponent } from "@client/utils/create-auth-component";
+import { createAuthComponent } from "@/utils/create-auth-component";
 import { useCallback, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
-import { CREATE_USERNAME_MUTATION } from "@client/graphql/mutations";
-import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@client/types/graphql";
+import { CREATE_USERNAME_MUTATION } from "@/graphql/mutations";
+import { CreateUsernameMutation, CreateUsernameMutationVariables } from "@/types/graphql";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import { IconUserPlus } from "@tabler/icons";

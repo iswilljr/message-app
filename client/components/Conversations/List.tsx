@@ -2,7 +2,7 @@
 import { Box, Center, ScrollArea, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { ConversationItem } from "./Item";
-import { ConversationFragment } from "@client/types/graphql";
+import { ConversationFragment } from "@/types/graphql";
 import { SkeletonItem } from "../Skeleton/Item";
 import { useSession } from "next-auth/react";
 import { IconMessagesOff } from "@tabler/icons";

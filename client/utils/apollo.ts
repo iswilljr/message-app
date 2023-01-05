@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { env } from "@client/env/client.mjs";
+import { env } from "@/env/client.mjs";
 import { createClient } from "graphql-ws";
 import { getSession } from "next-auth/react";
 

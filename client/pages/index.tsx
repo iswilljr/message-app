@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
-import { Chat } from "@client/components/Chat";
-import { createAuthComponent } from "@client/utils/create-auth-component";
+import { Chat } from "@/components/Chat";
+import { createAuthComponent } from "@/utils/create-auth-component";
 
 export default function Home() {
   return <Chat />;

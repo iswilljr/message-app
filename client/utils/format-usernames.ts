@@ -1,4 +1,4 @@
-import { Participants } from "@client/types/graphql";
+import { Participants } from "@/types/graphql";
 
 export const formatUsernames = (participants: Participants[], userId: string) => {
   return participants

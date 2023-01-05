@@ -1,14 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Flex } from "@mantine/core";
-import { MARK_CONVERSATION_AS_READ_MUTATION } from "@client/graphql/mutations";
-import { CONVERSATIONS_QUERY } from "@client/graphql/queries";
-import { ON_CONVERSATION_UPDATED } from "@client/graphql/subscriptions";
-import { ConversationsQuery, ConversationUpdatedSubscription } from "@client/types";
-import {
-  ActionType,
-  MarkConversationAsReadMutation,
-  MarkConversationAsReadMutationVariables,
-} from "@client/types/graphql";
+import { MARK_CONVERSATION_AS_READ_MUTATION } from "@/graphql/mutations";
+import { CONVERSATIONS_QUERY } from "@/graphql/queries";
+import { ON_CONVERSATION_UPDATED } from "@/graphql/subscriptions";
+import { ConversationsQuery, ConversationUpdatedSubscription } from "@/types";
+import { ActionType, MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables } from "@/types/graphql";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";

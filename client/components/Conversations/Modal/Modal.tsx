@@ -1,9 +1,9 @@
 import { useLazyQuery } from "@apollo/client";
 import { Button, Modal, Stack, TextInput } from "@mantine/core";
-import { SEARCH_USERS_QUERY } from "@client/graphql/queries";
+import { SEARCH_USERS_QUERY } from "@/graphql/queries";
 import { useState } from "react";
 import { CreateConversation } from "./CraeteConversation";
-import type { SearchUsersQuery, SearchUsersQueryVariables } from "@client/types/graphql";
+import type { SearchUsersQuery, SearchUsersQueryVariables } from "@/types/graphql";
 import { IconSearch } from "@tabler/icons";
 
 export function ConversationModal({ isOpen, onClose }: { isOpen: boolean; onOpen: () => void; onClose: () => void }) {

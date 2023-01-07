@@ -58,7 +58,7 @@ export function ConversationItem({
           {conversation.latestMessage && (
             <Box w="140%" display="flex">
               {conversation.latestMessage.sender.id === userId && (
-                <Text color="white.5" mr={4}>
+                <Text color="white.6" mr={4}>
                   you:{" "}
                 </Text>
               )}

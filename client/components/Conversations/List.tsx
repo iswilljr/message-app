@@ -23,7 +23,7 @@ export function ConversationList({ conversations, loading, onViewConversation }:
 
   return (
     <Box w="100%" sx={{ flex: 1, overflowY }} mb="md">
-      <Box component="ul" w="100%" sx={{ overflowX: "hidden", overflowY, height: "100%" }}>
+      <Box w="100%" sx={{ overflowX: "hidden", overflowY, height: "100%" }}>
         <ScrollArea w="100%" h="100%" px="sm">
           {loading ? (
             [...Array(10)].map((_, i) => <SkeletonItem key={i} />)
@@ -35,7 +35,7 @@ export function ConversationList({ conversations, loading, onViewConversation }:
                 );
 
                 return (
-                  <motion.li
+                  <motion.div
                     key={conversation.id}
                     layoutId={conversation.id}
                     animate={{ scale: 1, opacity: 1 }}
@@ -55,7 +55,7 @@ export function ConversationList({ conversations, loading, onViewConversation }:
                         await onViewConversation(conversationId);
                       }}
                     />
-                  </motion.li>
+                  </motion.div>
                 );
               })}
             </AnimatePresence>

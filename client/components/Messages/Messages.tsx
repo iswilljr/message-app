@@ -82,7 +82,7 @@ export function Messages({ conversationId }: MessagesProps) {
                 </Stack>
                 <Flex justify={isSentByMe ? "flex-end" : "flex-start"}>
                   <Box
-                    sx={(theme) => ({ borderRadius: 8 })}
+                    sx={{ borderRadius: 8, color: "#fff" }}
                     bg={isSentByMe ? "green.7" : "white.2"}
                     px={4}
                     py={2}

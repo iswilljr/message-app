@@ -75,7 +75,7 @@ export function MessagesHeader({ conversation }: MessagesHeaderProps) {
       </ActionIcon>
       <Flex sx={{ flex: 1, overflow: "hidden" }} justify="space-between" align="center">
         <Flex gap={8} sx={{ flexDirection: "row", overflow: "hidden" }} align="center">
-          <Text color="white.5">To:</Text>
+          <Text color="white.7">To:</Text>
           <Text
             weight={600}
             color="white.9"

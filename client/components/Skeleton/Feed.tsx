@@ -22,7 +22,7 @@ export function SkeletonFeed() {
         </ActionIcon>
         <Flex sx={{ flex: 1, overflow: "hidden" }} justify="space-between" align="center">
           <Flex gap={8} sx={{ flexDirection: "row", overflow: "hidden" }} align="center">
-            <Text color="white.5">To:</Text>
+            <Text color="white.7">To:</Text>
             <Skeleton width="100px" height="15px" />
           </Flex>
           <ActionIcon disabled ml="md" aria-label="Delete conversation">

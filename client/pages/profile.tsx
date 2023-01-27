@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import { Button, Center, Input, Stack, TextInput } from "@mantine/core";
 import { useMutation } from "@apollo/client";
-import { IconUserPlus } from "@tabler/icons";
+import { IconUserPlus } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
 import { createAuthComponent } from "@/utils/create-auth-component";
 import { CREATE_USERNAME_MUTATION } from "@/graphql/mutations";

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { Box, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconLogout, IconPencilPlus } from "@tabler/icons";
+import { IconLogout, IconPencilPlus } from "@tabler/icons-react";
 import { ConversationList, ConversationListProps } from "./List";
 import { ConversationModal } from "./Modal/Modal";
 

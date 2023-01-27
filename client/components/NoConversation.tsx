@@ -1,5 +1,5 @@
 import { Center, Text } from "@mantine/core";
-import { IconMessage, IconMessagePlus, IconMessages } from "@tabler/icons";
+import { IconMessage, IconMessagePlus, IconMessages } from "@tabler/icons-react";
 
 interface NoConversationProps {
   loading: boolean;

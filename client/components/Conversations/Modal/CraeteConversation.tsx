@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { ActionIcon, Avatar, Flex, List, Stack, Text } from "@mantine/core";
 import { useMutation } from "@apollo/client";
-import { IconMessagePlus } from "@tabler/icons";
+import { IconMessagePlus } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
 import { CREATE_CONVERSATION_MUTATION } from "@/graphql/mutations";
 import type { CreateConversationMutation, CreateConversationMutationVariables, SearchUser } from "@/types/graphql";

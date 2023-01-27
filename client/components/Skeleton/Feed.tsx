@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { ActionIcon, Box, Flex, Skeleton, Stack, Text } from "@mantine/core";
-import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
+import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons-react";
 import { SkeletonMessages } from "./Messages";
 
 export function SkeletonFeed() {

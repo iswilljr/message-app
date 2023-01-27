@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Box, Center, ScrollArea, Text } from "@mantine/core";
-import { IconMessagesOff } from "@tabler/icons";
+import { IconMessagesOff } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SkeletonItem } from "../Skeleton/Item";
 import { ConversationItem } from "./Item";

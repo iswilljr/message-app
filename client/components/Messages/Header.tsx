@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { ActionIcon, Flex, Stack, Text } from "@mantine/core";
 import { useMutation } from "@apollo/client";
-import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons";
+import { IconArrowNarrowLeft, IconTrash } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
 import { formatUsernames } from "@/utils/format-usernames";
 import { DELETE_CONVERSATION_MUTATION } from "@/graphql/mutations";

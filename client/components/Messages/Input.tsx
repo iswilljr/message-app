@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useSession } from "next-auth/react";
 import { ActionIcon, Box, Flex, TextInput } from "@mantine/core";
 import { useMutation } from "@apollo/client";
-import { IconSend } from "@tabler/icons";
+import { IconSend } from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
 import { SEND_MESSAGE_MUTATION } from "@/graphql/mutations";
 import { CONVERSATIONS_QUERY, MESSAGES_QUERY } from "@/graphql/queries";

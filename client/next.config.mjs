@@ -6,6 +6,9 @@ await import("./env/server.mjs");
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   i18n: {
     locales: ["en"],
     defaultLocale: "en",

@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { MantineProvider } from "@mantine/core";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "@/utils/apollo";
+import { myCache } from "@/utils/cache";
 import { theme } from "@/utils/theme";
 
 const Toaster = dynamic(async () => (await import("react-hot-toast")).Toaster, { ssr: false });
@@ -17,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="description" content="Chat Application to chat with the people you may know" />
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
       </Head>
-      <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={theme}>
+      <MantineProvider emotionCache={myCache} withCSSVariables withGlobalStyles withNormalizeCSS theme={theme}>
         <ApolloProvider client={client}>
           <main>
             <Component {...pageProps} />

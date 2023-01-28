@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { ActionType } from "../../../types/graphql.js";
-import { SUBSCRIPTIONS, SubscriptionData } from "../../../utils/subscriptions.js";
+import { SUBSCRIPTIONS, type SubscriptionData } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 
 export const createConversation: MutationResolvers["createConversation"] = async (

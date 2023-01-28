@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { Resolver } from "../types/graphql.js";
+import type { Resolver } from "../types/graphql.js";
 import { logger } from "./logger.js";
 
 export const resolverWrapper = <Result, Parent, Args>(

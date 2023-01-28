@@ -1,13 +1,13 @@
 import { withFilter } from "graphql-subscriptions";
-import { Message, SubscriptionOnMessageSentArgs } from "../../../types/graphql.js";
-import { Resolver, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
+import type { Message, SubscriptionOnMessageSentArgs } from "../../../types/graphql.js";
+import { type Resolver, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 
 interface OnMessageSent {
   onMessageSent: Message;
 }
 
-const asyncIteratorFn: Resolver<OnMessageSent, {}, AsyncIterator<any>> = (_, _args, { pubsub }) => {
+const asyncIteratorFn: Resolver<OnMessageSent, any, AsyncIterator<any>> = (_, _args, { pubsub }) => {
   const asyncIterator = pubsub.asyncIterator(SUBSCRIPTIONS.MESSAGE_SENT);
   return asyncIterator;
 };

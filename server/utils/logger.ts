@@ -1,4 +1,4 @@
-import chalk, { ChalkInstance } from "chalk";
+import chalk, { type ChalkInstance } from "chalk";
 
 class Logger {
   constructor(private readonly name: string) {}

@@ -1,4 +1,4 @@
-import Document, { DocumentContext } from "next/document";
+import Document, { type DocumentContext } from "next/document";
 import { ServerStyles, createStylesServer } from "@mantine/next";
 import { myCache } from "@/utils/cache";
 

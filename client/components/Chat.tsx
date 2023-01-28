@@ -9,8 +9,12 @@ import { CONVERSATIONS_QUERY } from "@/graphql/queries";
 import { ON_CONVERSATION_UPDATED } from "@/graphql/subscriptions";
 import { Conversations } from "./Conversations/Conversations";
 import { Feed } from "./Feed";
-import { ConversationUpdatedSubscription, ConversationsQuery } from "@/types";
-import { ActionType, MarkConversationAsReadMutation, MarkConversationAsReadMutationVariables } from "@/types/graphql";
+import type { ConversationUpdatedSubscription, ConversationsQuery } from "@/types";
+import {
+  ActionType,
+  type MarkConversationAsReadMutation,
+  type MarkConversationAsReadMutationVariables,
+} from "@/types/graphql";
 
 export function Chat() {
   const router = useRouter();

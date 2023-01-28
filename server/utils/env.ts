@@ -1,4 +1,4 @@
-import { ZodFormattedError, z } from "zod";
+import { type ZodFormattedError, z } from "zod";
 import { logger } from "./logger.js";
 
 export const serverSchema = z.object({

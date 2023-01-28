@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 import { ActionType } from "../../../types/graphql.js";
 import { logger } from "../../../utils/logger.js";
-import { SUBSCRIPTIONS, SubscriptionData } from "../../../utils/subscriptions.js";
+import { SUBSCRIPTIONS, type SubscriptionData } from "../../../utils/subscriptions.js";
 import { populateConversation } from "../query/conversations.js";
 import { populateMessage } from "../query/messages.js";
 

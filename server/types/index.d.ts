@@ -2,7 +2,7 @@ import type { Session } from "next-auth";
 import type { PrismaClient } from "@prisma/client";
 import type { PubSub } from "graphql-subscriptions";
 import type { Context as GraphQLSubscriptionContext } from "graphql-ws";
-import {
+import type {
   MutationResolvers as GraphQLMutationResolvers,
   QueryResolvers as GraphQLQueryResolvers,
   Resolvers as GraphQLResolvers,

@@ -1,5 +1,5 @@
 import type { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 
 interface Result {

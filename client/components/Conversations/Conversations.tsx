@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 import { Box, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconLogout, IconPencilPlus } from "@tabler/icons-react";
-import { ConversationList, ConversationListProps } from "./List";
+import { ConversationList, type ConversationListProps } from "./List";
 import { ConversationModal } from "./Modal/Modal";
 
 export function Conversations(props: ConversationListProps) {

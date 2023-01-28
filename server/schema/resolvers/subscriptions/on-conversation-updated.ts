@@ -1,17 +1,21 @@
 import { withFilter } from "graphql-subscriptions";
-import { OnConversationUpdatedPayload } from "../../../types/graphql.js";
-import { Resolver, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
+import type { OnConversationUpdatedPayload } from "../../../types/graphql.js";
+import { type Resolver, SUBSCRIPTIONS } from "../../../utils/subscriptions.js";
 
 interface OnConversationUpdated {
   onConversationUpdated: OnConversationUpdatedPayload;
 }
 
-const asyncIteratorFn: Resolver<OnConversationUpdated, {}, AsyncIterator<any>> = (_, _args, { pubsub }) => {
+const asyncIteratorFn: Resolver<OnConversationUpdated, any, AsyncIterator<any>> = (_, _args, { pubsub }) => {
   const asyncIterator = pubsub.asyncIterator(SUBSCRIPTIONS.CONVERSATION_UPDATED);
   return asyncIterator;
 };
 
-const filterFn: Resolver<OnConversationUpdated, {}, boolean> = (payload, _args, { pubsub, session }: UnsafeContext) => {
+const filterFn: Resolver<OnConversationUpdated, any, boolean> = (
+  payload,
+  _args,
+  { pubsub, session }: UnsafeContext
+) => {
   const isParticipant = payload.onConversationUpdated.conversation.participants.findIndex(
     (participant) => participant.user.id === session?.user?.id
   );

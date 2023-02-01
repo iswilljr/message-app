@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@mantine/core";
 import { IconPoint } from "@tabler/icons-react";
-import { formatDate } from "@/utils/format-data";
+import { formatDate } from "@/utils/format-date";
 import { formatUsernames } from "@/utils/format-usernames";
 import type { ConversationFragment } from "@/types/graphql";
 

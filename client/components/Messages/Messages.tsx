@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Avatar, Box, Flex, Stack, Text } from "@mantine/core";
 import { useQuery } from "@apollo/client";
-import { formatDate } from "@/utils/format-data";
+import { formatDate } from "@/utils/format-date";
 import { MESSAGES_QUERY } from "@/graphql/queries";
 import { ON_MESSAGE_SENT } from "@/graphql/subscriptions";
 import { SkeletonMessages } from "../Skeleton/Messages";

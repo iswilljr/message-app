@@ -1984,11 +1984,6 @@
     "@tabler/icons-react" "2.1.2"
     prop-types "^15.7.2"
 
-"@tabler/icons@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-2.1.2.tgz#589ede0fe885d388caa78186c71c2997dd29dd73"
-  integrity sha512-+CPB+BSqVDP4+/d+cHSaGwG460C3sob7EJkQ+ZS8xV6bRER64OsCP92O7M+uYBhJFDWuf6poCeSETNZNcFa2nA==
-
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
@@ -6453,9 +6448,9 @@ typescript@4.9.4:
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 ua-parser-js@^0.7.30:
-  version "0.7.32"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.32.tgz#cd8c639cdca949e30fa68c44b7813ef13e36d211"
-  integrity sha512-f9BESNVhzlhEFf2CHMSj40NWOjYPl1YKYbrvIr/hFTDEmLq7SRbWvm7FcdcpCYT95zrOhC7gZSxjdnnTpBcwVw==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

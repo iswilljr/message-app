@@ -1,9 +1,15 @@
 /* eslint-disable eqeqeq */
+import { ApolloProvider } from "@apollo/client";
 import { Chat } from "@/components/Chat";
+import { client } from "@/utils/apollo";
 import { createAuthComponent } from "@/utils/create-auth-component";
 
 export default function Home() {
-  return <Chat />;
+  return (
+    <ApolloProvider client={client}>
+      <Chat />
+    </ApolloProvider>
+  );
 }
 
 export const getServerSideProps = createAuthComponent({

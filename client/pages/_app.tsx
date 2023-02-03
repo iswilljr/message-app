@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { MantineProvider } from "@mantine/core";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "@/utils/apollo";
 import { myCache } from "@/utils/cache";
 import { theme } from "@/utils/theme";
 
@@ -17,13 +19,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
       </Head>
       <MantineProvider emotionCache={myCache} withCSSVariables withGlobalStyles withNormalizeCSS theme={theme}>
-        <main>
-          <Component {...pageProps} />
-          <Toaster
-            toastOptions={{ style: { backgroundColor: "var(--mantine-color-white-2)", color: "#fff" } }}
-            position="bottom-center"
-          />
-        </main>
+        <ApolloProvider client={client}>
+          <main>
+            <Component {...pageProps} />
+            <Toaster
+              toastOptions={{ style: { backgroundColor: "var(--mantine-color-white-2)", color: "#fff" } }}
+              position="bottom-center"
+            />
+          </main>
+        </ApolloProvider>
       </MantineProvider>
     </SessionProvider>
   );
